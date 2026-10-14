@@ -428,15 +428,15 @@ Le fichier est en XML, encodé en UTF-8 :
 |---|---|
 | `NOMBRE` | `entier` si la variable sert de compteur de boucle ou ne reçoit que des valeurs entières, sinon `réel` |
 | `CHAINE` | `chaîne` |
-| `LISTE` | `liste de réels`, créée par `L ← []` en tête d'algorithme ; chaque affectation indexée est signalée, car AlgoWeb indexe à partir de 0 et n'agrandit pas les listes |
+| `LISTE` | `liste d'entiers` ou `liste de réels` selon les valeurs reçues, créée par `L ← []` en tête d'algorithme ; chaque affectation indexée est signalée, car AlgoWeb indexe à partir de 0 et n'agrandit pas les listes |
 | `LIRE x` | `Lire x` |
 | `AFFICHER x`, `AFFICHER "t"`, `AFFICHERCALCUL e` | `Afficher …`, suivi de `↵` si le retour à la ligne était coché |
 | `x PREND_LA_VALEUR e` | `x ← e` ; `L[r] PREND_LA_VALEUR a:b` devient `L[r] ← a` puis `L[r + 1] ← b` |
-| `SI (c) ALORS … SINON …` | `Si c alors … Sinon … FinSi` |
-| `POUR i ALLANT_DE a A b` | `Pour i de a à b faire … FinPour` |
+| `SI (c) ALORS … SINON …` | `Si c alors … Sinon … FinSi` ; un `SINON` qui ne contient qu'un `SI` devient `Sinon si` |
+| `POUR i ALLANT_DE a A b` | `Pour i de a à b faire … FinPour` ; une borne de fin réelle devient `floor(b)`, qui donne les mêmes tours |
 | `TANT_QUE (c) FAIRE` | `TantQue c faire … FinTantQue` |
 | `PAUSE`, commentaire, ligne vide | `Pause`, `//`, ligne vide |
-| `FONCTION f(p)` avec `RENVOYER` | `Fonction f(p : réel) : réel` avec `Retourner` ; `Procédure` s'il n'y a aucun `RENVOYER` |
+| `FONCTION f(p)` avec `RENVOYER` | `Fonction f(p : …) : …` avec `Retourner` ; `Procédure` s'il n'y a aucun `RENVOYER`. Les paramètres prennent le type des arguments reçus (réel si la fonction n'est jamais appelée), la valeur renvoyée celui des `RENVOYER` |
 | `APPELER_FONCTION f(x)` | `f(x)` |
 | F1 active | `Fonction F1(x : réel) : réel` qui retourne l'expression de F1 |
 | F2 active | `Fonction F2(…) : réel` : un `Si … alors Retourner … FinSi` par ligne, puis `Retourner` la valeur par défaut |
@@ -462,8 +462,17 @@ Conversion des expressions :
 | `"texte" + x`, où `x` est un nombre | `"texte" + str(x)` |
 | `ALGOBOX_ALEA_ENT(a, b)` | `randint(a, b)` |
 | `ALGOBOX_ARRONDIR(x, n)` | `round(x, n)` |
+| `ALGOBOX_SOMME(L, d, f)`, `ALGOBOX_MAXIMUM`, `ALGOBOX_MINIMUM` | `sum(L[d:f + 1])`, `max(…)`, `min(…)` |
+| `ALGOBOX_MOYENNE(L, d, f)` | `sum(L[d:f + 1]) / len(L[d:f + 1])` |
+| `ch.substring(a, b)`, `parseInt(x)`, `parseFloat(x)`, `Math.trunc(x)` | `ch[a:b]`, `int(x)`, `float(x)`, `int(x)` |
 | autres `ALGOBOX_*` | conservés tels quels et signalés comme erreurs à corriger |
 | `^` (ou exclusif chez AlgoBox) | non converti et signalé, car `^` désigne la puissance dans AlgoWeb |
+
+Compléments, fixés à l'implémentation :
+- **Déduction des types.** Elle se fait par point fixe : toutes les variables `NOMBRE` partent entières et deviennent réelles dès qu'elles reçoivent une valeur réelle (division, `sqrt`, littéral décimal, variable réelle…). Une variable lue au clavier est réelle, sauf si elle sert de borne de boucle, d'indice ou d'opérande de `mod`. Le rapport donne la raison de chaque type.
+- **Noms.** Un nom réservé par AlgoWeb (mot-clé, nom Python ou prédéfini) reçoit le suffixe `_` (`fin` devient `fin_`), sans jamais prendre un nom déjà déclaré.
+- **Lignes non convertibles.** Une expression illisible ou une méthode JavaScript sans équivalent (`.toUpperCase()`…) ferait échouer l'analyse de tout le texte. La ligne devient donc un commentaire `// [AlgoBox, non converti] …`, signalé dans le rapport, et le reste du programme reste vérifiable et exécutable.
+- **Variables globales.** Une fonction AlgoBox peut lire les variables de l'algorithme principal ; AlgoWeb l'interdit. La ligne est signalée et le diagnostic propose de passer la variable en paramètre.
 
 ### 5.3 Rapport d'import
 
@@ -472,7 +481,7 @@ Après l'import, un rapport présente :
 - les types déduits pour chaque variable ;
 - la liste des points à vérifier, avec leur numéro de ligne : listes, éléments non convertis, différences de sémantique (borne de `POUR` modifiée dans la boucle, `round`…).
 
-L'algorithme s'ouvre ensuite dans l'éditeur, avec ses diagnostics.
+L'algorithme s'ouvre ensuite dans l'éditeur, avec ses diagnostics. Les points identiques sont regroupés (« Lignes 25, 26, 27 : … ») et chaque numéro de ligne place le curseur sur la ligne. Le rapport reste disponible pendant la session dans la palette de commandes.
 
 ### 5.4 Tests de l'import
 

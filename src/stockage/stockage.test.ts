@@ -132,6 +132,24 @@ describe('archives et imports', () => {
     expect(lireFichier('A.json', new TextEncoder().encode(ecrireDocument(doc)))[0].resultat).toEqual({ document: doc })
   })
 
+  it('importe un fichier AlgoBox, en UTF-8 ou en Windows-1252, avec son rapport', () => {
+    const xml = (texte: string) =>
+      `<?xml version="1.0"?><Algo><description texte="Écrit en ${texte}" courant=""/>` +
+      `<item algoitem="VARIABLES" code="100#x"/><item algoitem="DEBUT_ALGORITHME" code="101#x">` +
+      `<item algoitem="" code="4#Été#1"/></item></Algo>`
+    const utf8 = lireFichier('Été.alg', new TextEncoder().encode(xml('UTF-8')))[0].resultat
+    // Windows-1252 : « É » vaut 0xC9 et « é » 0xE9.
+    const octets = Uint8Array.from([...xml('Windows-1252')].map((c) => ({ É: 0xc9, é: 0xe9 })[c] ?? c.charCodeAt(0)))
+    const cp1252 = lireFichier('Été.alg', octets)[0].resultat
+    for (const [r, encodage] of [[utf8, 'UTF-8'], [cp1252, 'Windows-1252']] as const) {
+      if (!('document' in r)) throw new Error('import refusé')
+      expect(r.document.nom).toBe('Été')
+      expect(r.document.description).toBe(`Écrit en ${encodage}`)
+      expect(r.document.code).toBe('Algorithme Été\n\nVariables\nDébut\n  Afficher "Été" ↵\nFin\n')
+      expect(r.rapport?.lignes).toBe(1)
+    }
+  })
+
   it('explique pourquoi un fichier ne peut pas être importé', () => {
     const erreur = (nom: string, octets: Uint8Array) => {
       const r = lireFichier(nom, octets)[0].resultat

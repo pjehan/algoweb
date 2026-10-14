@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import type { RapportImport } from '../../import-algobox/index.ts'
 import { lireFichier } from '../../stockage/archive.ts'
 import { nomUnique, renommerCode, type DocumentAlgo } from '../../stockage/document.ts'
 import { useEtat } from '../etat.ts'
@@ -10,12 +11,14 @@ type Decision = 'renommer' | 'remplacer' | 'ignorer'
 interface Conflit {
   document: DocumentAlgo
   existant: string
+  rapport?: RapportImport
 }
 
 /**
- * Import de fichiers .json et .zip (PLAN.md, section 7.3). En cas de nom déjà
- * pris, l'étudiant choisit de renommer, remplacer ou ignorer, avec l'option
- * « appliquer à tous ».
+ * Import de fichiers .json, .zip et .alg (PLAN.md, section 7.3). En cas de nom
+ * déjà pris, l'étudiant choisit de renommer, remplacer ou ignorer, avec
+ * l'option « appliquer à tous ». Le rapport d'import du dernier fichier
+ * AlgoBox ouvert s'affiche à la fin.
  */
 export function Importation() {
   const aImporter = useEtat((e) => e.aImporter)
@@ -23,8 +26,11 @@ export function Importation() {
   const [erreurs, setErreurs] = useState<{ nom: string; message: string }[]>([])
   const [bilan, setBilan] = useState({ importes: 0, remplaces: 0, ignores: 0 })
   const [pourTous, setPourTous] = useState(false)
+  /** Algorithme ouvert en dernier, s'il vient d'un fichier AlgoBox. */
+  const [dernierAlg, setDernierAlg] = useState<string | null>(null)
 
-  const terminer = (b: typeof bilan, erreursLues: typeof erreurs) => {
+  const terminer = (b: typeof bilan, erreursLues: typeof erreurs, rapport: string | null) => {
+    if (rapport) useEtat.getState().afficherRapport(rapport)
     const morceaux = [
       b.importes > 0 && `${b.importes} algorithme${b.importes > 1 ? 's' : ''} importé${b.importes > 1 ? 's' : ''}`,
       b.remplaces > 0 && `${b.remplaces} remplacé${b.remplaces > 1 ? 's' : ''}`,
@@ -42,9 +48,11 @@ export function Importation() {
     const traites = pourTous ? liste : [premier]
     const nouveauBilan = { ...b }
     let dernierId: string | undefined
+    let rapport = dernierAlg
     for (const c of traites) {
       if (decision === 'ignorer') {
         nouveauBilan.ignores++
+        continue
       } else if (decision === 'remplacer') {
         etat.remplacerDocument(c.existant, c.document)
         nouveauBilan.remplaces++
@@ -55,12 +63,15 @@ export function Importation() {
         dernierId = etat.creerDocument({ ...c.document, nom, code: renommerCode(c.document.code, nom) })?.id
         nouveauBilan.importes++
       }
+      if (dernierId && c.rapport) etat.ajouterRapport(dernierId, c.rapport)
+      rapport = dernierId && c.rapport ? dernierId : null
     }
     const suivants = pourTous ? [] : reste
     setConflits(suivants)
     setBilan(nouveauBilan)
+    setDernierAlg(rapport)
     if (dernierId) etat.ouvrir(dernierId)
-    if (suivants.length === 0) terminer(nouveauBilan, erreurs)
+    if (suivants.length === 0) terminer(nouveauBilan, erreurs, rapport)
   }
 
   useEffect(() => {
@@ -73,14 +84,19 @@ export function Importation() {
       const nouveaux: Conflit[] = []
       const b = { importes: 0, remplaces: 0, ignores: 0 }
       let dernierId: string | undefined
+      let rapport: string | null = null
       for (const f of lus) {
         if (!('document' in f.resultat)) continue
-        const doc = f.resultat.document
+        const { document: doc, rapport: rapportLu } = f.resultat
         const existant = etat.index.find((m) => !m.supprimeLe && m.nom.toLowerCase() === doc.nom.toLowerCase())
         if (existant) {
-          nouveaux.push({ document: doc, existant: existant.id })
+          nouveaux.push({ document: doc, existant: existant.id, rapport: rapportLu })
         } else {
-          dernierId = etat.creerDocument(doc)?.id ?? dernierId
+          const id = etat.creerDocument(doc)?.id
+          if (!id) continue
+          dernierId = id
+          if (rapportLu) etat.ajouterRapport(id, rapportLu)
+          rapport = rapportLu ? id : null
           b.importes++
         }
       }
@@ -88,8 +104,9 @@ export function Importation() {
       setErreurs(erreursLues)
       setBilan(b)
       setPourTous(false)
+      setDernierAlg(rapport)
       setConflits(nouveaux)
-      if (nouveaux.length === 0) terminer(b, erreursLues)
+      if (nouveaux.length === 0) terminer(b, erreursLues, rapport)
     })()
   }, [aImporter])
 

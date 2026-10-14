@@ -1,0 +1,29 @@
+{
+  "description": "Table de multiplication",
+  "rapport": {
+    "lignes": 10,
+    "types": [
+      {
+        "nom": "t",
+        "portee": null,
+        "type": "entier",
+        "raison": "lue au clavier, sert de borne de boucle, d’indice ou d’opérande de mod"
+      },
+      {
+        "nom": "c",
+        "portee": null,
+        "type": "entier",
+        "raison": "compteur de boucle"
+      }
+    ],
+    "points": [
+      {
+        "lignes": [
+          13
+        ],
+        "message": "mod : avec un nombre négatif, le résultat diffère d’AlgoBox (-7 mod 2 vaut 1 dans AlgoWeb, -1 dans AlgoBox)."
+      }
+    ],
+    "ignores": []
+  }
+}

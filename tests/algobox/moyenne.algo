@@ -1,0 +1,46 @@
+Algorithme moyenne
+
+Variables
+  n : entier
+  i : entier
+  note : réel
+  total : réel
+  moyenne : réel
+  compte : entier
+  prenom : chaîne
+Début
+  //Saisie du prénom et du nombre de notes
+  Lire prenom
+  Lire n
+  total ← 0
+  compte ← 0
+
+  Pour i de 1 à n faire
+    Lire note
+    total ← total + note
+    Si note ≥ 10 alors
+      compte ← compte + 1
+    FinSi
+  FinPour
+  moyenne ← total / n
+  Afficher "Bonjour "
+  Afficher prenom ↵
+  Afficher "Moyenne : "
+  Afficher moyenne ↵
+  Si moyenne ≥ 16 alors
+    Afficher "Très bien" ↵
+  Sinon si moyenne ≥ 10 et compte > n / 2 alors
+    Afficher "Admis" ↵
+  Sinon
+    Afficher "Ajourné" ↵
+  FinSi
+  Afficher compte * 100 / n
+  Afficher " % de notes au-dessus de 10" ↵
+  TantQue n > 0 faire
+    Afficher n
+    n ← n - 1
+  FinTantQue
+  Pause
+  Afficher ↵
+  Afficher "Fin" ↵
+Fin

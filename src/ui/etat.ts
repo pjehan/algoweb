@@ -2,6 +2,7 @@ import { create } from 'zustand'
 import { MoteurExecution } from '../execution/client.ts'
 import type { CadreAffiche, ModePas } from '../execution/machine.ts'
 import type { MessageDuMoteur } from '../execution/session.ts'
+import type { RapportImport } from '../import-algobox/index.ts'
 import type { Diagnostic } from '../langage/messages.ts'
 import { analyser } from '../langage/analyse.ts'
 import { formater } from '../langage/formateur.ts'
@@ -80,6 +81,10 @@ interface Etat {
   annonce: string
   /** Fichiers déposés ou choisis, en attente d'import. */
   aImporter: File[]
+  /** Rapports d'import des fichiers AlgoBox, par algorithme, pour la session. */
+  rapportsImport: Record<string, RapportImport>
+  /** Algorithme dont le rapport d'import est affiché. */
+  rapportAffiche: string | null
   /** Points d'arrêt de chaque algorithme (lignes), pour la session. */
   pointsArret: Record<string, number[]>
   pause: Pause | null
@@ -111,6 +116,8 @@ interface Etat {
   allerA: (ligne: number, colonne?: number) => void
   annoncer: (texte: string) => void
   demanderImport: (fichiers: File[]) => void
+  ajouterRapport: (id: string, rapport: RapportImport) => void
+  afficherRapport: (id: string | null) => void
   executer: () => void
   executerPasAPas: () => void
   arreter: () => void
@@ -278,6 +285,8 @@ export const useEtat = create<Etat>()((set, get) => {
     aller: null,
     annonce: '',
     aImporter: [],
+    rapportsImport: {},
+    rapportAffiche: null,
     pointsArret: {},
     pause: null,
     cadreChoisi: 0,
@@ -407,6 +416,10 @@ export const useEtat = create<Etat>()((set, get) => {
     annoncer: (annonce) => set({ annonce }),
 
     demanderImport: (fichiers) => set({ aImporter: fichiers }),
+
+    ajouterRapport: (id, rapport) => set({ rapportsImport: { ...get().rapportsImport, [id]: rapport } }),
+
+    afficherRapport: (rapportAffiche) => set({ rapportAffiche }),
 
     executer: () => lancer('continu'),
 

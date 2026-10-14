@@ -30,6 +30,8 @@ Pour ajouter un programme au corpus (`tests/programmes/`) : écrire `nom.algo`, 
 npm run corpus:reference tests/programmes/nom.algo
 ```
 
+Pour vérifier l'import de fichiers AlgoBox personnels, sans les versionner : `npm run import:verifier -- <dossier> --detail` (ajouter `--sortie <dossier>` pour écrire le pseudo-code produit).
+
 ## Organisation
 
 | Dossier | Contenu |

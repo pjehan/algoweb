@@ -1,6 +1,7 @@
 import { strToU8, unzipSync, zipSync } from 'fflate'
 import { exporterTexteEnPython } from '../export/index.ts'
-import { ecrireDocument, lireDocument, nomDeFichier, nomUnique, type DocumentAlgo } from './document.ts'
+import { ErreurAlg, importerAlg, type RapportImport } from '../import-algobox/index.ts'
+import { ecrireDocument, lireDocument, nomDeFichier, nomUnique, nouveauDocument, type DocumentAlgo } from './document.ts'
 
 /**
  * Téléchargements groupés et imports (PLAN.md, section 7.3).
@@ -30,8 +31,8 @@ export function nomArchive(date = new Date()): string {
 
 export interface FichierLu {
   nom: string
-  /** Document lu, ou message d'erreur. */
-  resultat: { document: DocumentAlgo } | { erreur: string }
+  /** Document lu (avec le rapport d'import pour un fichier AlgoBox), ou message d'erreur. */
+  resultat: { document: DocumentAlgo; rapport?: RapportImport } | { erreur: string }
 }
 
 /** Décode un fichier texte en UTF-8 ; renvoie undefined s'il n'est pas valide. */
@@ -53,9 +54,25 @@ function lireJson(nom: string, octets: Uint8Array): FichierLu {
   }
 }
 
+/** Décode un fichier `.alg` : UTF-8, ou Windows-1252 s'il est mal encodé (PLAN.md, section 7.3). */
+export function decoderAlg(octets: Uint8Array): string {
+  return decoderUtf8(octets) ?? new TextDecoder('windows-1252').decode(octets)
+}
+
+function lireAlg(nom: string, octets: Uint8Array): FichierLu {
+  try {
+    const importe = importerAlg(decoderAlg(octets), nom)
+    const document = { ...nouveauDocument(importe.nom), description: importe.description, code: importe.code }
+    return { nom, resultat: { document, rapport: importe.rapport } }
+  } catch (e) {
+    if (e instanceof ErreurAlg) return { nom, resultat: { erreur: e.message } }
+    throw e
+  }
+}
+
 /**
- * Lit un fichier importé : `.json` (un algorithme) ou `.zip` (archive
- * AlgoWeb). Les fichiers `.alg` d'AlgoBox seront pris en charge en phase 6.
+ * Lit un fichier importé : `.json` (un algorithme), `.zip` (archive AlgoWeb)
+ * ou `.alg` (algorithme AlgoBox, converti).
  */
 export function lireFichier(nom: string, octets: Uint8Array): FichierLu[] {
   const extension = nom.toLowerCase().split('.').pop()
@@ -72,6 +89,6 @@ export function lireFichier(nom: string, octets: Uint8Array): FichierLu[] {
       .map(([chemin, donnees]) => lireJson(`${nom} › ${chemin}`, donnees))
     return lus.length > 0 ? lus : [{ nom, resultat: { erreur: 'L’archive ne contient aucun algorithme AlgoWeb.' } }]
   }
-  if (extension === 'alg') return [{ nom, resultat: { erreur: 'L’import des fichiers AlgoBox (.alg) sera bientôt disponible.' } }]
-  return [{ nom, resultat: { erreur: 'Type de fichier non reconnu : AlgoWeb importe les fichiers .json et .zip.' } }]
+  if (extension === 'alg') return [lireAlg(nom, octets)]
+  return [{ nom, resultat: { erreur: 'Type de fichier non reconnu : AlgoWeb importe les fichiers .json, .zip et .alg.' } }]
 }

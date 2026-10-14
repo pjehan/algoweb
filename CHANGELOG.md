@@ -28,6 +28,13 @@ Le format suit [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/) et le pr
 - Débogueur (phase 5) : pas à pas (pas suivant, pas principal, sortir de la fonction), points d'arrêt dans la marge qui suivent les modifications du texte, ligne courante surlignée, variables (valeurs modifiées mises en évidence, listes dépliables), pile d'appels, exécution animée, suspension d'une exécution en cours.
 - Palette de commandes (Ctrl+K), commande « Mettre le texte en forme ».
 - Éditeur par blocs (phase 5), synchronisé avec le texte et sans perte (commentaires et lignes vides compris) : champs modifiables avec autocomplétion, erreurs sous chaque bloc, insertion par la palette ou le bouton « + », glisser-déposer, navigation et édition au clavier, annuler et rétablir, repli des blocs, débogueur. Mode d'édition au choix dans la barre et dans les préférences.
+- Import des fichiers AlgoBox `.alg` (phase 6) :
+  - lecture XML sans dépendance, tolérante aux fichiers anciens ; repli sur Windows-1252 pour un fichier mal encodé ;
+  - conversion de toutes les lignes et des expressions JavaScript d'AlgoBox (`Math.*`, méthodes de chaîne, `ALGOBOX_*` courantes, F1 et F2) ;
+  - déduction des types entier et réel par point fixe, paramètres typés d'après les appels ;
+  - noms réservés par AlgoWeb renommés ; ligne non convertible gardée en commentaire ;
+  - rapport d'import : lignes converties, types déduits avec leur raison, points à vérifier groupés et cliquables, réglages non repris ; disponible ensuite dans la palette de commandes.
+- Fichiers `.alg` de test écrits pour le projet (`tests/algobox/`), avec le texte et le rapport attendus.
 - Tests de bout en bout Playwright avec contrôle d'accessibilité axe-core, sur Chromium, Firefox et WebKit dans la CI (branche main).
 
 ### Modifications du plan
@@ -35,3 +42,4 @@ Le format suit [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/) et le pr
 - La machine d'exécution remplace les fonctions génératrices prévues : récursion indépendante de la pile JavaScript, débogueur plus simple, aucun code évalué (section 9.4).
 - Différences connues ajoutées : dernier chiffre des fonctions mathématiques, exposant négatif entre entiers, lecture d'un booléen, puissance non réelle (section 6).
 - Les noms français des fonctions prédéfinies (`somme`, `longueur`…) restent permis pour les variables et les paramètres ; ils ne sont interdits que pour les fonctions et les procédures (section 3, point 9).
+- Import AlgoBox (section 5.2) : les listes, les paramètres et les valeurs renvoyées sont typés par déduction au lieu d'être toujours réels ; `ALGOBOX_SOMME`, `ALGOBOX_MOYENNE`, `ALGOBOX_MINIMUM` et `ALGOBOX_MAXIMUM` deviennent des tranches de liste ; une borne de fin réelle est arrondie par `floor` ; une ligne qui ne peut pas être convertie devient un commentaire, pour que le reste du programme reste vérifiable.

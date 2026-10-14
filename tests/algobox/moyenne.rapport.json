@@ -1,0 +1,54 @@
+{
+  "description": "Moyenne de n notes, avec mention.\nFichier écrit pour les tests d'AlgoWeb.",
+  "rapport": {
+    "lignes": 36,
+    "types": [
+      {
+        "nom": "n",
+        "portee": null,
+        "type": "entier",
+        "raison": "lue au clavier, sert de borne de boucle, d’indice ou d’opérande de mod"
+      },
+      {
+        "nom": "i",
+        "portee": null,
+        "type": "entier",
+        "raison": "compteur de boucle"
+      },
+      {
+        "nom": "note",
+        "portee": null,
+        "type": "réel",
+        "raison": "lue au clavier"
+      },
+      {
+        "nom": "total",
+        "portee": null,
+        "type": "réel",
+        "raison": "reçoit une valeur réelle (ligne 20)"
+      },
+      {
+        "nom": "moyenne",
+        "portee": null,
+        "type": "réel",
+        "raison": "reçoit une valeur réelle (ligne 25)"
+      },
+      {
+        "nom": "compte",
+        "portee": null,
+        "type": "entier",
+        "raison": "ne reçoit que des valeurs entières"
+      },
+      {
+        "nom": "prenom",
+        "portee": null,
+        "type": "chaîne",
+        "raison": "déclarée CHAINE"
+      }
+    ],
+    "points": [],
+    "ignores": [
+      "Les réglages d’exécution d’AlgoBox (arrondi automatique, nombre de décimales, limites de boucles et d’affichages) ne sont pas repris."
+    ]
+  }
+}

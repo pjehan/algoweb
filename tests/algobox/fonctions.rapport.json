@@ -1,0 +1,180 @@
+{
+  "description": "",
+  "rapport": {
+    "lignes": 38,
+    "types": [
+      {
+        "nom": "x",
+        "portee": "F1",
+        "type": "réel",
+        "raison": "fonction F1 d’AlgoBox, toujours réelle"
+      },
+      {
+        "nom": "valeur renvoyée",
+        "portee": "F1",
+        "type": "réel",
+        "raison": "fonction F1 d’AlgoBox, toujours réelle",
+        "retour": true
+      },
+      {
+        "nom": "a",
+        "portee": "F2",
+        "type": "réel",
+        "raison": "fonction F2 d’AlgoBox, toujours réelle"
+      },
+      {
+        "nom": "b",
+        "portee": "F2",
+        "type": "réel",
+        "raison": "fonction F2 d’AlgoBox, toujours réelle"
+      },
+      {
+        "nom": "valeur renvoyée",
+        "portee": "F2",
+        "type": "réel",
+        "raison": "fonction F2 d’AlgoBox, toujours réelle",
+        "retour": true
+      },
+      {
+        "nom": "k",
+        "portee": "carre",
+        "type": "entier",
+        "raison": "ne reçoit que des valeurs entières"
+      },
+      {
+        "nom": "valeur renvoyée",
+        "portee": "carre",
+        "type": "entier",
+        "raison": "ne reçoit que des valeurs entières",
+        "retour": true
+      },
+      {
+        "nom": "m",
+        "portee": "somme_",
+        "type": "entier",
+        "raison": "ne reçoit que des valeurs entières"
+      },
+      {
+        "nom": "s",
+        "portee": "somme_",
+        "type": "entier",
+        "raison": "ne reçoit que des valeurs entières"
+      },
+      {
+        "nom": "j",
+        "portee": "somme_",
+        "type": "entier",
+        "raison": "compteur de boucle"
+      },
+      {
+        "nom": "valeur renvoyée",
+        "portee": "somme_",
+        "type": "entier",
+        "raison": "ne reçoit que des valeurs entières",
+        "retour": true
+      },
+      {
+        "nom": "qui",
+        "portee": "saluer",
+        "type": "chaîne",
+        "raison": "reçoit une chaîne"
+      },
+      {
+        "nom": "fin_",
+        "portee": "saluer",
+        "type": "chaîne",
+        "raison": "déclarée CHAINE"
+      },
+      {
+        "nom": "T",
+        "portee": "remplir",
+        "type": "liste de réels",
+        "raison": "reçoit une liste, éléments réels (ligne 50)"
+      },
+      {
+        "nom": "taille",
+        "portee": "remplir",
+        "type": "entier",
+        "raison": "ne reçoit que des valeurs entières"
+      },
+      {
+        "nom": "r",
+        "portee": "remplir",
+        "type": "entier",
+        "raison": "compteur de boucle"
+      },
+      {
+        "nom": "total",
+        "portee": null,
+        "type": "entier",
+        "raison": "ne reçoit que des valeurs entières"
+      },
+      {
+        "nom": "Mes",
+        "portee": null,
+        "type": "liste de réels",
+        "raison": "déclarée LISTE, éléments réels (ligne 70)"
+      },
+      {
+        "nom": "liste_",
+        "portee": null,
+        "type": "liste de réels",
+        "raison": "déclarée LISTE, éléments réels (ligne 74)"
+      },
+      {
+        "nom": "y",
+        "portee": null,
+        "type": "réel",
+        "raison": "reçoit une valeur réelle (ligne 76)"
+      }
+    ],
+    "points": [
+      {
+        "lignes": [],
+        "message": "« somme » (fonction) devient « somme_ » : ce nom est réservé dans AlgoWeb."
+      },
+      {
+        "lignes": [],
+        "message": "« liste » (variable) devient « liste_ » : ce nom est réservé dans AlgoWeb."
+      },
+      {
+        "lignes": [],
+        "message": "« fin » (variable locale de saluer) devient « fin_ » : ce nom est réservé dans AlgoWeb."
+      },
+      {
+        "lignes": [
+          50,
+          71,
+          72,
+          73
+        ],
+        "message": "Affectation dans une liste : les listes AlgoWeb commencent à l’indice 0 et ne s’agrandissent pas seules ; pour ajouter un élément, utilisez ajouter(L, x)."
+      },
+      {
+        "lignes": [
+          56
+        ],
+        "message": "La fonction afficherTotal utilise la variable total de l’algorithme principal : dans AlgoWeb, passez-la en paramètre."
+      },
+      {
+        "lignes": [
+          74
+        ],
+        "message": "Lecture dans une liste : les listes AlgoWeb commencent à l’indice 0 et ne s’agrandissent pas seules."
+      },
+      {
+        "lignes": [
+          78,
+          79,
+          80
+        ],
+        "message": "Instruction graphique non convertie : AlgoWeb ne trace pas de graphiques."
+      }
+    ],
+    "ignores": [
+      "Le repère graphique n’est pas repris : AlgoWeb ne trace pas de graphiques.",
+      "L’extension JavaScript (outils.js) n’est pas reprise.",
+      "Les réglages d’exécution d’AlgoBox (arrondi automatique, nombre de décimales, limites de boucles et d’affichages) ne sont pas repris."
+    ]
+  }
+}

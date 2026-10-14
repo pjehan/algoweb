@@ -1,0 +1,81 @@
+Algorithme fonctions
+
+Fonction F1(x : réel) : réel
+Début
+  Retourner x * x - 2 * x + 1
+FinFonction
+
+Fonction F2(a : réel, b : réel) : réel
+Début
+  Si a < 0 alors
+    Retourner -a
+  FinSi
+  Si b = 0 alors
+    Retourner a / 2
+  FinSi
+  Retourner a + b
+FinFonction
+
+Fonction carre(k : entier) : entier
+Début
+  Retourner k * k
+FinFonction
+
+//Somme des entiers de 1 à m
+Fonction somme_(m : entier) : entier
+Variables
+  s : entier
+  j : entier
+Début
+  s ← 0
+  Pour j de 1 à m faire
+    s ← s + j
+  FinPour
+  Retourner s
+FinFonction
+
+Procédure saluer(qui : chaîne)
+Variables
+  fin_ : chaîne
+Début
+  fin_ ← " !"
+  Afficher "Bonjour " + qui + fin_ ↵
+FinProcédure
+
+Procédure remplir(T : liste de réels, taille : entier)
+Variables
+  r : entier
+Début
+  Pour r de 0 à taille - 1 faire
+    T[r] ← r / 2
+  FinPour
+FinProcédure
+
+Procédure afficherTotal()
+Début
+  Afficher total ↵
+FinProcédure
+
+Variables
+  total : entier
+  Mes : liste de réels
+  liste_ : liste de réels
+  y : réel
+Début
+  Mes ← []
+  liste_ ← []
+  total ← somme_(10)
+  Afficher carre(total) ↵
+  saluer("Ada")
+  remplir(Mes, 4)
+  liste_[1] ← 3
+  liste_[2] ← 5
+  liste_[3] ← 8
+  Lire liste_[4]
+  Afficher liste_[2] ↵
+  y ← F1(2) + F2(3, 0)
+  afficherTotal()
+  // [AlgoBox, non converti] TRACER_POINT (1,y)
+  // [AlgoBox, non converti] TRACER_SEGMENT (0,0)->(1,y)
+  // [AlgoBox, non converti] EFFACER_GRAPHIQUE
+Fin

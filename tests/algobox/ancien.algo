@@ -1,0 +1,18 @@
+Algorithme ancien
+
+Variables
+  t : entier
+  c : entier
+Début
+  Lire t
+  Pour c de 1 à 10 faire
+    Afficher c * t
+    Afficher " "
+  FinPour
+  Afficher ↵
+  Si t mod 2 = 0 alors
+    Afficher "pair" ↵
+  Sinon
+    Afficher "impair" ↵
+  FinSi
+Fin

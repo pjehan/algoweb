@@ -12,6 +12,7 @@
     "test:watch": "vitest",
     "preview": "vite preview",
     "corpus:reference": "node scripts/reference.ts",
+    "import:verifier": "node scripts/import-algobox.ts",
     "e2e": "playwright test --project=chromium"
   },
   "dependencies": {

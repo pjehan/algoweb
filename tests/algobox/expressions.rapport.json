@@ -1,0 +1,139 @@
+{
+  "description": "Conversion des expressions JavaScript d'AlgoBox.",
+  "rapport": {
+    "lignes": 27,
+    "types": [
+      {
+        "nom": "a",
+        "portee": null,
+        "type": "réel",
+        "raison": "reçoit une valeur réelle (ligne 23)"
+      },
+      {
+        "nom": "b",
+        "portee": null,
+        "type": "réel",
+        "raison": "reçoit une valeur réelle (ligne 14)"
+      },
+      {
+        "nom": "r",
+        "portee": null,
+        "type": "réel",
+        "raison": "reçoit une valeur réelle (ligne 15)"
+      },
+      {
+        "nom": "max_",
+        "portee": null,
+        "type": "entier",
+        "raison": "ne reçoit que des valeurs entières"
+      },
+      {
+        "nom": "mot",
+        "portee": null,
+        "type": "chaîne",
+        "raison": "déclarée CHAINE"
+      },
+      {
+        "nom": "T",
+        "portee": null,
+        "type": "liste d'entiers",
+        "raison": "déclarée LISTE, éléments entiers"
+      },
+      {
+        "nom": "k",
+        "portee": null,
+        "type": "entier",
+        "raison": "compteur de boucle"
+      }
+    ],
+    "points": [
+      {
+        "lignes": [],
+        "message": "« max » (variable) devient « max_ » : ce nom est réservé dans AlgoWeb."
+      },
+      {
+        "lignes": [
+          14
+        ],
+        "message": "mod : avec un nombre négatif, le résultat diffère d’AlgoBox (-7 mod 2 vaut 1 dans AlgoWeb, -1 dans AlgoBox)."
+      },
+      {
+        "lignes": [
+          16,
+          17
+        ],
+        "message": "round arrondit les demis au nombre pair le plus proche (round(2.5) vaut 2), alors qu’AlgoBox arrondit vers le haut."
+      },
+      {
+        "lignes": [
+          25,
+          26,
+          27
+        ],
+        "message": "Affectation dans une liste : les listes AlgoWeb commencent à l’indice 0 et ne s’agrandissent pas seules ; pour ajouter un élément, utilisez ajouter(L, x)."
+      },
+      {
+        "lignes": [
+          28
+        ],
+        "message": "ALGOBOX_SOMME est remplacée par une tranche de liste : vérifiez les indices, car les listes AlgoWeb commencent à 0."
+      },
+      {
+        "lignes": [
+          28
+        ],
+        "message": "ALGOBOX_MOYENNE est remplacée par une tranche de liste : vérifiez les indices, car les listes AlgoWeb commencent à 0."
+      },
+      {
+        "lignes": [
+          29
+        ],
+        "message": "Fonction AlgoBox non convertie : ALGOBOX_ECART_TYPE."
+      },
+      {
+        "lignes": [
+          30
+        ],
+        "message": "« ^ » était le « ou exclusif » dans AlgoBox ; dans AlgoWeb, il désigne la puissance. Vérifiez l’intention."
+      },
+      {
+        "lignes": [
+          31
+        ],
+        "message": "Expression JavaScript non convertie : « .toUpperCase(…) »."
+      },
+      {
+        "lignes": [
+          31,
+          32
+        ],
+        "message": "Ligne gardée en commentaire, car elle n’a pas pu être convertie : réécrivez-la."
+      },
+      {
+        "lignes": [
+          32
+        ],
+        "message": "Expression illisible : « (a+ »."
+      },
+      {
+        "lignes": [
+          33
+        ],
+        "message": "La borne de fin de la boucle est réelle : elle est arrondie à l’entier inférieur (floor), ce qui donne les mêmes tours de boucle."
+      },
+      {
+        "lignes": [
+          33
+        ],
+        "message": "La borne de fin est modifiée dans la boucle : AlgoBox la recalcule à chaque tour, AlgoWeb une seule fois au début."
+      },
+      {
+        "lignes": [
+          36
+        ],
+        "message": "Ligne AlgoBox inconnue (code 99) : elle est gardée en commentaire."
+      }
+    ],
+    "ignores": []
+  }
+}

@@ -787,6 +787,55 @@ a {
   margin-top: 1rem;
 }
 
+/* ------------------------------------------------------------ Rapport d'import */
+
+.dialogue:has(.rapport-import) {
+  width: min(48rem, calc(100% - 2rem));
+}
+
+.rapport-import h3 {
+  font-size: 1rem;
+  margin: 1rem 0 0.4rem;
+}
+
+.rapport-import ul {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.rapport-points li {
+  margin-bottom: 0.35rem;
+}
+
+.rapport-lignes {
+  font-weight: 600;
+}
+
+.rapport-types {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.rapport-types th,
+.rapport-types td {
+  text-align: left;
+  padding: 0.25rem 0.5rem;
+  border-bottom: 1px solid var(--bordure);
+  vertical-align: top;
+}
+
+.rapport-types th[scope='rowgroup'] {
+  background: var(--fond);
+  font-weight: 600;
+}
+
+.rapport-note {
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  color: var(--texte-doux);
+}
+
 /* ------------------------------------------------------------ Débogueur */
 
 .cm-gutter-arret {

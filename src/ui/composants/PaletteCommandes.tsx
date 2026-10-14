@@ -49,6 +49,11 @@ function commandes(ouvrir: (f: Fenetre) => void): Commande[] {
     { libelle: 'Exporter en Python', action: () => exporter('py') },
     { libelle: 'Exporter en texte', action: () => exporter('txt') },
     { libelle: 'Tout télécharger', action: toutTelecharger },
+    {
+      libelle: 'Afficher le rapport d’import',
+      action: () => etat().afficherRapport(etat().courantId),
+      disponible: () => etat().courantId !== null && etat().rapportsImport[etat().courantId!] !== undefined,
+    },
     { libelle: 'Importer des fichiers', action: () => document.querySelector<HTMLInputElement>('.bibliotheque input[type=file]')?.click() },
     { libelle: 'Enregistrer', raccourci: 'Ctrl+S', action: () => etat().enregistrer() },
     { libelle: 'Préférences', action: () => ouvrir('preferences') },

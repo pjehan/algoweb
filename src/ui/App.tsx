@@ -7,6 +7,7 @@ import { BarreDebogage, Inspection } from './composants/Debogueur.tsx'
 import { Diagnostics } from './composants/Diagnostics.tsx'
 import { Fenetres } from './composants/Fenetres.tsx'
 import { Importation } from './composants/Importation.tsx'
+import { RapportImport } from './composants/RapportImport.tsx'
 import { Palette } from './composants/Palette.tsx'
 import { PaletteCommandes } from './composants/PaletteCommandes.tsx'
 import { EditeurBlocs } from './blocs/EditeurBlocs.tsx'
@@ -208,6 +209,7 @@ export function App({ stockagePersistant }: { stockagePersistant: boolean }) {
       <Fenetres fenetre={fenetre} fermer={() => setFenetre(null)} />
       <PaletteCommandes ouvert={fenetre === 'commandes'} fermer={() => setFenetre(null)} ouvrir={setFenetre} />
       <Importation />
+      <RapportImport />
     </div>
   )
 }
