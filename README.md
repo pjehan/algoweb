@@ -17,7 +17,10 @@ npm test           # tests unitaires (Vitest)
 npm run lint       # oxlint
 npm run typecheck  # vérification des types
 npm run build      # construction dans dist/
+npm run e2e        # tests de bout en bout (Playwright, Chromium)
 ```
+
+Avant le premier `npm run e2e` : `npx playwright install chromium`. La CI exécute aussi les tests sous Firefox et WebKit, sur la branche `main`.
 
 Les tests de validation croisée exécutent le Python exporté : ils nécessitent `python3` (3.12 ou plus récent), et sont ignorés en local s'il est absent.
 

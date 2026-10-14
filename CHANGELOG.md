@@ -13,10 +13,19 @@ Le format suit [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/) et le pr
 - Corpus de programmes de test couvrant la section 4 du plan.
 - Exécution (phase 2) : compilateur vers une machine à pile, bibliothèque d'exécution fidèle à Python (entiers exacts, `div` et `mod`, `round` au pair, affichage des réels, somme compensée, Mersenne Twister de CPython), saisie tolérante, 23 erreurs d'exécution en français, pas à pas, points d'arrêt, pile des appels, Web Worker.
 - Tables de référence produites par CPython (`tests/python/`) et sorties du corpus identiques à CPython.
-- Démonstration provisoire de l'exécution sur la page d'accueil.
 - Export Python (phase 3) : imports limités aux fonctions utilisées, annotations de type, conversions d'entier en réel explicites, `range` simplifié, graine. L'exemple du plan est reproduit à l'identique.
 - Validation croisée dans la CI : les 12 programmes du corpus, exportés et exécutés par CPython 3.12, donnent les mêmes sorties qu'AlgoWeb.
 - Script `npm run corpus:reference` pour produire la sortie de référence d'un programme avec CPython.
+- Interface v1 (phase 4) :
+  - mise en page en trois colonnes, onglets sur tablette et téléphone ;
+  - éditeur CodeMirror : coloration, diagnostics en continu, autocomplétion sans tenir compte des accents, modèles à champs, indentation automatique, repli des blocs, recherche, mots-clés réécrits dans leur forme canonique, équivalents ASCII remplacés à la frappe ;
+  - palette d'instructions par catégories (clic ou glisser-déposer) ;
+  - console avec saisie redemandée en cas d'erreur, historique, copie, alerte après 10 secondes ;
+  - liste des diagnostics, avec accès à la ligne ;
+  - bibliothèque locale : sauvegarde automatique, corbeille de 30 jours, recherche et tri, jauge d'occupation, stockage plein, rappel de sauvegarde, alerte si l'algorithme est ouvert dans deux onglets ;
+  - téléchargements JSON, Python, texte et ZIP ; imports JSON et ZIP avec gestion des conflits de noms ;
+  - préférences (thème, taille du texte, notation des fonctions), propriétés de l'algorithme (description, graine), À propos.
+- Tests de bout en bout Playwright avec contrôle d'accessibilité axe-core, sur Chromium, Firefox et WebKit dans la CI (branche main).
 
 ### Modifications du plan
 

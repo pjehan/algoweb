@@ -32,6 +32,18 @@ function politiqueSecurite(): Plugin {
 export default defineConfig({
   base: '/algoweb/',
   plugins: [react(), politiqueSecurite()],
+  build: {
+    rollupOptions: {
+      output: {
+        // Bibliothèques à part : mieux mises en cache d'une version à l'autre.
+        manualChunks(id: string) {
+          if (id.includes('node_modules/@codemirror') || id.includes('node_modules/@lezer')) return 'codemirror'
+          if (id.includes('node_modules/react') || id.includes('node_modules/scheduler')) return 'react'
+          return undefined
+        },
+      },
+    },
+  },
   test: {
     include: ['src/**/*.test.ts', 'tests/**/*.test.ts'],
   },

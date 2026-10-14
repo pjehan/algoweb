@@ -690,6 +690,8 @@ L'interface doit le dire clairement et faciliter les téléchargements.
 - Sur tablette : les panneaux deviennent des onglets.
 - Sur téléphone : consultation et exécution ; l'édition reste possible mais n'est pas optimisée.
 
+**Forme canonique.** Quand le curseur quitte une ligne, ou que l'éditeur perd le focus, ses mots-clés sont réécrits dans leur forme canonique (`debut` devient `Début`, `fin si` devient `FinSi`). La réécriture n'a pas lieu pendant la frappe, pour ne pas déplacer le texte sous les doigts de l'étudiant.
+
 **Raccourcis.** Liste définitive en phases 4 et 5 :
 - Ctrl+Entrée : exécuter ; Échap : arrêter ;
 - Ctrl+S : enregistrer ; Ctrl+Z et Ctrl+Y : annuler et rétablir ;
