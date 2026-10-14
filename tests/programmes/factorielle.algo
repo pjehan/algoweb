@@ -1,0 +1,21 @@
+Algorithme Factorielle récursive
+
+// Entiers sans limite de taille, comme en Python.
+Fonction factorielle(n : entier) : entier
+Début
+  Si n ≤ 1 alors
+    Retourner 1
+  FinSi
+  Retourner n * factorielle(n - 1)
+FinFonction
+
+Variables
+  k : entier
+Début
+  Pour k de 0 à 25 pas de 5 faire
+    Afficher k, "! =", factorielle(k) ↵
+  FinPour
+  Afficher 2^100 ↵
+  Afficher 2^-1, 7 / 2, 6 / 2, 7 div 2, -7 div 2, -7 mod 2 ↵
+  Afficher 0.1 + 0.2, 1e-5, 1e16, round(2.5), round(3.14159, 2) ↵
+Fin

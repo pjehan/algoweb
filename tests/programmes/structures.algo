@@ -1,0 +1,46 @@
+Algorithme Structures de contrôle
+
+Procédure afficherLigne(n : entier, motif : chaîne) // procédure avec paramètres
+Variables
+  i : entier
+Début
+  Si n ≤ 0 alors
+    Retourner
+  FinSi
+  Pour i de 1 à n faire
+    Afficher motif
+  FinPour
+  Afficher "" ↵
+FinProcédure
+
+Variables
+  note, essais : entier
+  x : réel
+  fini : booléen
+Début
+  Lire note
+  Si note < 0 ou note > 20 alors
+    Afficher "Note invalide" ↵
+  Sinon si note ≥ 10 alors // admis
+    Afficher "Admis" ↵
+  Sinon si 8 ≤ note < 10 alors
+    Afficher "Rattrapage" ↵
+  Sinon
+    Afficher "Ajourné" ↵
+  FinSi
+  essais ← 0
+  Répéter
+    essais ← essais + 1
+    Lire x
+  Jusqu'à x > 0 et x < 100
+  fini ← non (essais > 3)
+  Afficher "Essais :", essais, fini ↵
+  TantQue x ≥ 1 faire
+    x ← x / 2
+  FinTantQue
+  Pour note de 10 à 0 pas de -2 faire
+    afficherLigne(note, "*")
+  FinPour
+  Pause
+  Afficher abs(-3), sqrt(16), floor(-2.5), ceil(2.1), int("42"), float("2.5"), pi ↵
+Fin

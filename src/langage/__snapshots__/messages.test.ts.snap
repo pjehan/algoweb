@@ -1,0 +1,526 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`catalogue des messages > affectation-egal 1`] = `
+{
+  "message": "Le signe = compare deux valeurs ; il n’affecte pas de valeur.",
+  "suggestion": "Pour affecter une valeur, utilisez ← (ou <-) : n ← …",
+}
+`;
+
+exports[`catalogue des messages > afficher-vide 1`] = `
+{
+  "message": "Afficher attend au moins une valeur.",
+  "suggestion": "Pour passer simplement à la ligne, écrivez Afficher ↵",
+}
+`;
+
+exports[`catalogue des messages > appel-invalide 1`] = `
+{
+  "message": "Seul un nom de fonction peut être suivi de parenthèses.",
+  "suggestion": undefined,
+}
+`;
+
+exports[`catalogue des messages > argument-type 1`] = `
+{
+  "message": "Le paramètre 1 de sqrt doit être un nombre ; ici, c’est une chaîne.",
+  "suggestion": undefined,
+}
+`;
+
+exports[`catalogue des messages > arguments-nombre 1`] = `
+{
+  "message": "randint attend 2 paramètres, mais en reçoit 1.",
+  "suggestion": undefined,
+}
+`;
+
+exports[`catalogue des messages > bloc-non-ferme 1`] = `
+{
+  "message": "Le bloc Si de la ligne 16 n’est pas fermé.",
+  "suggestion": "Ajoutez FinSi à la fin du bloc.",
+}
+`;
+
+exports[`catalogue des messages > caractere-inconnu 1`] = `
+{
+  "message": "Caractère inattendu : « # ».",
+  "suggestion": undefined,
+}
+`;
+
+exports[`catalogue des messages > chaine-immuable 1`] = `
+{
+  "message": "On ne peut pas modifier un caractère de la chaîne ch : une chaîne ne se modifie pas.",
+  "suggestion": "Construisez une nouvelle chaîne, par exemple : ch ← ch[:i] + "x" + ch[i + 1:]",
+}
+`;
+
+exports[`catalogue des messages > chaine-non-fermee 1`] = `
+{
+  "message": "La chaîne de caractères n’est pas fermée.",
+  "suggestion": "Ajoutez le guillemet de fin sur la même ligne.",
+}
+`;
+
+exports[`catalogue des messages > cible-invalide 1`] = `
+{
+  "message": "On ne peut affecter une valeur qu’à une variable ou à un élément de liste.",
+  "suggestion": undefined,
+}
+`;
+
+exports[`catalogue des messages > code-inaccessible 1`] = `
+{
+  "message": "Ces instructions ne seront jamais exécutées : elles suivent un Retourner.",
+  "suggestion": undefined,
+}
+`;
+
+exports[`catalogue des messages > collection-invalide 1`] = `
+{
+  "message": "Pour chaque parcourt une liste ou une chaîne ; ici, c’est un entier.",
+  "suggestion": undefined,
+}
+`;
+
+exports[`catalogue des messages > comparaison-invalide 1`] = `
+{
+  "message": "On ne peut pas comparer une chaîne et un entier avec <.",
+  "suggestion": undefined,
+}
+`;
+
+exports[`catalogue des messages > compteur-modifie 1`] = `
+{
+  "message": "Le compteur i ne doit pas être modifié à l’intérieur de sa boucle.",
+  "suggestion": "Utilisez une autre variable, ou une boucle TantQue.",
+}
+`;
+
+exports[`catalogue des messages > condition-non-booleenne 1`] = `
+{
+  "message": "Une condition doit être vraie ou fausse (un booléen) ; ici, c’est un entier.",
+  "suggestion": "Exemple : Si n ≠ 0 alors",
+}
+`;
+
+exports[`catalogue des messages > constante-appelee 1`] = `
+{
+  "message": "pi est une constante, pas une fonction.",
+  "suggestion": "Écrivez pi sans parenthèses.",
+}
+`;
+
+exports[`catalogue des messages > crochet-non-ferme 1`] = `
+{
+  "message": "Crochet ouvert mais jamais fermé.",
+  "suggestion": "Ajoutez « ] ».",
+}
+`;
+
+exports[`catalogue des messages > debut-manquant 1`] = `
+{
+  "message": "L’algorithme principal doit contenir un bloc Début … Fin.",
+  "suggestion": undefined,
+}
+`;
+
+exports[`catalogue des messages > declaration-double 1`] = `
+{
+  "message": "n est déjà déclaré à la ligne 2.",
+  "suggestion": undefined,
+}
+`;
+
+exports[`catalogue des messages > declaration-hors-variables 1`] = `
+{
+  "message": "Les déclarations de variables se placent dans la section Variables, avant Début.",
+  "suggestion": undefined,
+}
+`;
+
+exports[`catalogue des messages > declaration-mal-formee 1`] = `
+{
+  "message": "Déclaration mal écrite.",
+  "suggestion": "Exemple : n, i : entier",
+}
+`;
+
+exports[`catalogue des messages > echappement-inconnu 1`] = `
+{
+  "message": "Séquence d’échappement inconnue : \\q.",
+  "suggestion": "Séquences possibles : \\" \\' \\\\ \\n \\t. Pour écrire une barre oblique inverse, doublez-la : \\\\.",
+}
+`;
+
+exports[`catalogue des messages > entete-mal-place 1`] = `
+{
+  "message": "La ligne Algorithme doit être la première de l’algorithme.",
+  "suggestion": undefined,
+}
+`;
+
+exports[`catalogue des messages > entete-sans-nom 1`] = `
+{
+  "message": "Donnez un nom à l’algorithme.",
+  "suggestion": "Exemple : Algorithme Somme des pairs",
+}
+`;
+
+exports[`catalogue des messages > entete-sous-programme 1`] = `
+{
+  "message": "En-tête de fonction mal écrit.",
+  "suggestion": "Exemple : Fonction aire(longueur : réel, largeur : réel) : réel",
+}
+`;
+
+exports[`catalogue des messages > exposant-unicode 1`] = `
+{
+  "message": "Le symbole « ² » n’est pas reconnu.",
+  "suggestion": "Utilisez l’opérateur ^ : x^2.",
+}
+`;
+
+exports[`catalogue des messages > expression-attendue 1`] = `
+{
+  "message": "Une valeur ou un calcul est attendu au lieu de « * ».",
+  "suggestion": undefined,
+}
+`;
+
+exports[`catalogue des messages > expression-sans-effet 1`] = `
+{
+  "message": "Ce calcul n’est ni affecté, ni affiché.",
+  "suggestion": "Écrivez par exemple x ← … ou Afficher … ↵",
+}
+`;
+
+exports[`catalogue des messages > faire-manquant 1`] = `
+{
+  "message": "Il manque « faire » à la fin de la ligne TantQue.",
+  "suggestion": undefined,
+}
+`;
+
+exports[`catalogue des messages > fermeture-inattendue 1`] = `
+{
+  "message": "FinPour ne correspond à aucun Pour ouvert.",
+  "suggestion": undefined,
+}
+`;
+
+exports[`catalogue des messages > fin-sous-programme 1`] = `
+{
+  "message": "Ce bloc se termine par FinProcédure.",
+  "suggestion": undefined,
+}
+`;
+
+exports[`catalogue des messages > fonction-inconnue 1`] = `
+{
+  "message": "La fonction carre n’existe pas.",
+  "suggestion": undefined,
+}
+`;
+
+exports[`catalogue des messages > fonction-sans-parentheses 1`] = `
+{
+  "message": "sqrt est une fonction : il faut des parenthèses pour l’appeler.",
+  "suggestion": "Exemple : sqrt(x)",
+}
+`;
+
+exports[`catalogue des messages > indexation-invalide 1`] = `
+{
+  "message": "n est un entier : on ne peut pas en prendre un élément.",
+  "suggestion": "Seules les chaînes et les listes ont des indices.",
+}
+`;
+
+exports[`catalogue des messages > indice-non-entier 1`] = `
+{
+  "message": "Un indice doit être un entier ; ici, c’est un réel.",
+  "suggestion": undefined,
+}
+`;
+
+exports[`catalogue des messages > instruction-dans-variables 1`] = `
+{
+  "message": "La section Variables ne contient que des déclarations.",
+  "suggestion": "Ajoutez la ligne Début avant les instructions.",
+}
+`;
+
+exports[`catalogue des messages > instruction-inconnue 1`] = `
+{
+  "message": "Instruction incomprise.",
+  "suggestion": "Vouliez-vous dire Afficher ?",
+}
+`;
+
+exports[`catalogue des messages > lire-cible 1`] = `
+{
+  "message": "Lire range la valeur saisie dans une variable ou un élément de liste.",
+  "suggestion": "Exemple : Lire x",
+}
+`;
+
+exports[`catalogue des messages > lire-liste 1`] = `
+{
+  "message": "Lire ne peut pas remplir la liste R d’un coup.",
+  "suggestion": "Lisez une valeur puis ajoutez-la : Lire x, puis ajouter(R, x).",
+}
+`;
+
+exports[`catalogue des messages > lire-liste-non-typee 1`] = `
+{
+  "message": "Pour lire un élément de L, le type de ses éléments doit être connu.",
+  "suggestion": "Déclarez par exemple L : liste de réels",
+}
+`;
+
+exports[`catalogue des messages > liste-attendue 1`] = `
+{
+  "message": "Le premier paramètre de ajouter doit être une liste ; ici, c’est un entier.",
+  "suggestion": undefined,
+}
+`;
+
+exports[`catalogue des messages > mot-cle-dans-expression 1`] = `
+{
+  "message": "« alors » est un mot-clé et ne peut pas servir de valeur.",
+  "suggestion": undefined,
+}
+`;
+
+exports[`catalogue des messages > nom-non-declare 1`] = `
+{
+  "message": "La variable m n’est pas déclarée.",
+  "suggestion": "Vouliez-vous dire n ?",
+}
+`;
+
+exports[`catalogue des messages > nom-reserve 1`] = `
+{
+  "message": "« len » est le nom d’une fonction prédéfinie et ne peut pas servir de nom.",
+  "suggestion": "Choisissez un autre nom.",
+}
+`;
+
+exports[`catalogue des messages > nombre-colle 1`] = `
+{
+  "message": "Il manque un opérateur entre 2 et n.",
+  "suggestion": "Pour une multiplication, écrivez 2 * n.",
+}
+`;
+
+exports[`catalogue des messages > notation-pointee 1`] = `
+{
+  "message": "AlgoWeb n’utilise pas la notation pointée (comme L.append(x)).",
+  "suggestion": "Utilisez les fonctions et procédures : ajouter(L, x), len(L)…",
+}
+`;
+
+exports[`catalogue des messages > operande-invalide 1`] = `
+{
+  "message": "L’opérateur + ne s’applique pas à une chaîne et un entier.",
+  "suggestion": "Pour coller un nombre à une chaîne, convertissez-le avec str(…).",
+}
+`;
+
+exports[`catalogue des messages > parenthese-non-fermee 1`] = `
+{
+  "message": "Parenthèse ouverte mais jamais fermée.",
+  "suggestion": "Ajoutez « ) ».",
+}
+`;
+
+exports[`catalogue des messages > pas-nul 1`] = `
+{
+  "message": "Le pas d’une boucle Pour ne peut pas être nul.",
+  "suggestion": undefined,
+}
+`;
+
+exports[`catalogue des messages > point-virgule 1`] = `
+{
+  "message": "Le point-virgule n’est pas utilisé en AlgoWeb.",
+  "suggestion": "Écrivez une seule instruction par ligne.",
+}
+`;
+
+exports[`catalogue des messages > pour-mal-forme 1`] = `
+{
+  "message": "Boucle Pour mal écrite.",
+  "suggestion": "Exemples : Pour i de 1 à n faire, Pour i de 10 à 0 pas de -2 faire, Pour chaque x dans L faire",
+}
+`;
+
+exports[`catalogue des messages > pour-non-entier 1`] = `
+{
+  "message": "La borne de fin d’une boucle Pour doit être un entier ; ici, c’est un réel.",
+  "suggestion": "Pour parcourir des réels, utilisez une boucle TantQue.",
+}
+`;
+
+exports[`catalogue des messages > procedure-dans-expression 1`] = `
+{
+  "message": "p est une procédure : elle ne renvoie pas de valeur et ne peut pas servir dans un calcul.",
+  "suggestion": undefined,
+}
+`;
+
+exports[`catalogue des messages > resultat-ignore 1`] = `
+{
+  "message": "Le résultat de la fonction sqrt est ignoré.",
+  "suggestion": "Rangez-le dans une variable (x ← sqrt(…)) ou affichez-le.",
+}
+`;
+
+exports[`catalogue des messages > retour-dans-procedure 1`] = `
+{
+  "message": "La procédure p ne peut pas renvoyer de valeur.",
+  "suggestion": "Écrivez Retourner seul pour en sortir, ou déclarez une Fonction.",
+}
+`;
+
+exports[`catalogue des messages > retour-hors-fonction 1`] = `
+{
+  "message": "Retourner ne s’utilise que dans une fonction ou une procédure.",
+  "suggestion": undefined,
+}
+`;
+
+exports[`catalogue des messages > retour-mal-place 1`] = `
+{
+  "message": "Le retour à la ligne ↵ (ou \\n) n’est permis qu’à la fin d’une instruction Afficher.",
+  "suggestion": undefined,
+}
+`;
+
+exports[`catalogue des messages > retour-manquant 1`] = `
+{
+  "message": "La fonction f peut se terminer sans exécuter Retourner.",
+  "suggestion": "Vérifiez que chaque cas (chaque branche d’un Si) se termine par Retourner.",
+}
+`;
+
+exports[`catalogue des messages > retour-sans-valeur 1`] = `
+{
+  "message": "La fonction f doit renvoyer une valeur.",
+  "suggestion": "Exemple : Retourner resultat",
+}
+`;
+
+exports[`catalogue des messages > retour-type 1`] = `
+{
+  "message": "La fonction f doit renvoyer un entier ; ici, c’est une chaîne.",
+  "suggestion": "Convertissez avec int(…).",
+}
+`;
+
+exports[`catalogue des messages > si-sans-alors 1`] = `
+{
+  "message": "Il manque « alors » à la fin de la ligne.",
+  "suggestion": "Exemple : Si n > 0 alors",
+}
+`;
+
+exports[`catalogue des messages > sinon-apres-sinon 1`] = `
+{
+  "message": "Sinon si ne peut pas suivre un Sinon.",
+  "suggestion": "Le Sinon doit être la dernière branche du Si.",
+}
+`;
+
+exports[`catalogue des messages > symbole-etranger 1`] = `
+{
+  "message": "Le symbole « % » n’existe pas en AlgoWeb.",
+  "suggestion": "Utilisez mod.",
+}
+`;
+
+exports[`catalogue des messages > texte-apres-fin 1`] = `
+{
+  "message": "Rien ne doit suivre la ligne Fin de l’algorithme principal.",
+  "suggestion": "Déplacez les fonctions et procédures avant l’algorithme principal.",
+}
+`;
+
+exports[`catalogue des messages > texte-en-trop 1`] = `
+{
+  "message": "Texte inattendu : « 2 ».",
+  "suggestion": undefined,
+}
+`;
+
+exports[`catalogue des messages > type-affectation 1`] = `
+{
+  "message": "n est un entier : on ne peut pas y ranger un réel.",
+  "suggestion": "Convertissez avec int(…) ou round(…).",
+}
+`;
+
+exports[`catalogue des messages > type-inconnu 1`] = `
+{
+  "message": "Type inconnu : « entir ».",
+  "suggestion": "Vouliez-vous dire entier ?",
+}
+`;
+
+exports[`catalogue des messages > type-retour-manquant 1`] = `
+{
+  "message": "La fonction f doit indiquer le type de la valeur qu’elle renvoie.",
+  "suggestion": "Exemple : Fonction f(…) : réel. Si elle ne renvoie rien, déclarez une Procédure.",
+}
+`;
+
+exports[`catalogue des messages > type-retour-procedure 1`] = `
+{
+  "message": "La procédure p ne renvoie pas de valeur et n’a donc pas de type de retour.",
+  "suggestion": "Retirez le type, ou déclarez une Fonction.",
+}
+`;
+
+exports[`catalogue des messages > variable-appelee 1`] = `
+{
+  "message": "n est une variable, pas une fonction.",
+  "suggestion": undefined,
+}
+`;
+
+exports[`catalogue des messages > variable-hors-portee 1`] = `
+{
+  "message": "La variable n de l’algorithme principal n’est pas accessible dans la fonction f.",
+  "suggestion": "Passez-la en paramètre, ou déclarez une variable locale.",
+}
+`;
+
+exports[`catalogue des messages > variable-inutilisee 1`] = `
+{
+  "message": "La variable n n’est jamais utilisée.",
+  "suggestion": undefined,
+}
+`;
+
+exports[`catalogue des messages > variable-sans-valeur 1`] = `
+{
+  "message": "La variable n n’a peut-être pas encore de valeur ici.",
+  "suggestion": "Affectez-lui une valeur avant de l’utiliser (n ← …).",
+}
+`;
+
+exports[`catalogue des messages > variables-mal-placee 1`] = `
+{
+  "message": "La section Variables doit se trouver avant Début.",
+  "suggestion": undefined,
+}
+`;
+
+exports[`catalogue des messages > virgule-decimale 1`] = `
+{
+  "message": "Le séparateur décimal est le point, pas la virgule.",
+  "suggestion": "Écrivez 2.5.",
+}
+`;

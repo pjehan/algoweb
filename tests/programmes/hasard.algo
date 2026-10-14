@@ -1,0 +1,12 @@
+Algorithme Lancers de dés
+
+Variables
+  i, de : entier
+  faces : liste de chaînes
+Début
+  faces ← ["pile", "face"]
+  Pour i de 1 à 5 faire
+    de ← randint(1, 6)
+    Afficher de, choice(faces), random() < 1 ↵
+  FinPour
+Fin

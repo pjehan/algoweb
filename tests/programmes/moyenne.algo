@@ -1,0 +1,30 @@
+Algorithme Moyenne des notes
+
+Fonction moyenne(notes : liste de réels) : réel
+Variables
+  somme, note : réel
+Début
+  somme ← 0
+  Pour chaque note dans notes faire
+    somme ← somme + note
+  FinPour
+  Retourner somme / len(notes)
+FinFonction
+
+Variables
+  n, i : entier
+  x : réel
+  notes : liste de réels
+Début
+  notes ← []
+  Lire n
+  Pour i de 1 à n faire
+    Lire x
+    ajouter(notes, x)
+  FinPour
+  Si n > 0 alors
+    Afficher "Moyenne :", moyenne(notes) ↵
+  Sinon
+    Afficher "Aucune note saisie" ↵
+  FinSi
+Fin

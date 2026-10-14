@@ -66,7 +66,8 @@ Ces choix complètent les décisions de la section 2. Ils ont été validés le 
 8. **Compteur protégé.** Le compteur d'une boucle `Pour` ne peut pas être modifié dans le corps de la boucle.
 9. **Noms.**
    - Les identifiants sont sensibles à la casse et peuvent contenir des accents.
-   - Sont interdits : les mots-clés AlgoWeb, les mots-clés Python et les noms des fonctions prédéfinies, en Python comme en français. Le code Python exporté est ainsi toujours valide, sans renommage, et le changement de notation ne crée jamais de conflit de noms.
+   - Sont interdits : les mots-clés AlgoWeb, les mots-clés Python et les noms Python des fonctions prédéfinies. Le code Python exporté est ainsi toujours valide, sans renommage.
+   - Les noms français des fonctions prédéfinies (`somme`, `longueur`…) sont interdits comme noms de fonctions et de procédures, mais permis pour les variables et les paramètres : un appel `somme(L)` ne se confond jamais avec une variable `somme`, et le changement de notation ne crée donc pas de conflit.
 10. **Mots-clés à la saisie.**
     - Casse et accents indifférents : `debut` équivaut à `Début`.
     - Variantes acceptées : `Fin Si`, `Tant que`, `Renvoyer`, `Saisir`, `Écrire`.

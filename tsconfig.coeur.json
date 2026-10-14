@@ -1,0 +1,12 @@
+{
+  // Le cœur (langage, exécution, import, export) ne dépend ni du DOM ni de Node (PLAN.md, section 9.2).
+  "extends": "./tsconfig.app.json",
+  "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.coeur.tsbuildinfo",
+    "lib": ["ES2023"],
+    "types": [],
+    "jsx": "preserve"
+  },
+  "include": ["src/langage", "src/execution", "src/import-algobox", "src/export", "src/version.ts"],
+  "exclude": ["src/**/*.test.ts"]
+}

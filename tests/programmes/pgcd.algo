@@ -1,0 +1,20 @@
+Algorithme PGCD
+
+Fonction pgcd(a : entier, b : entier) : entier
+Variables
+  r : entier
+Début
+  TantQue b ≠ 0 faire
+    r ← a mod b
+    a ← b
+    b ← r
+  FinTantQue
+  Retourner a
+FinFonction
+
+Variables
+  a, b : entier
+Début
+  Lire a, b
+  Afficher "PGCD :", pgcd(a, b) ↵
+Fin

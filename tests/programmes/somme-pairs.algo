@@ -1,0 +1,14 @@
+Algorithme Somme des pairs
+
+Variables
+  n, i, s : entier
+Début
+  Lire n
+  s ← 0
+  Pour i de 1 à n faire
+    Si i mod 2 = 0 alors
+      s ← s + i
+    FinSi
+  FinPour
+  Afficher s ↵
+Fin

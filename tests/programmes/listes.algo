@@ -1,0 +1,40 @@
+Algorithme Tri et listes
+
+Procédure trier(L : liste d'entiers)
+Variables
+  i, j, tmp : entier
+Début
+  Pour i de 0 à len(L) - 2 faire
+    Pour j de 0 à len(L) - 2 - i faire
+      Si L[j] > L[j + 1] alors
+        tmp ← L[j]
+        L[j] ← L[j + 1]
+        L[j + 1] ← tmp
+      FinSi
+    FinPour
+  FinPour
+FinProcédure
+
+Variables
+  L : liste d'entiers
+  zeros : liste d'entiers
+  grille : liste de listes d'entiers
+  notes : liste de réels
+  x : entier
+Début
+  L ← [5, 3, 8, 1]
+  ajouter(L, 4)
+  insérer(L, 0, 9)
+  supprimer(L, 1)
+  trier(L)
+  Afficher L, len(L), min(L), max(L), sum(L) ↵
+  zeros ← [0] * 3
+  grille ← [[1, 2], [3, 4]]
+  Afficher zeros, grille[1][0], max(3, 7, 2) ↵
+  notes ← [12, 15.5]
+  Pour chaque x dans L faire
+    Afficher x, ""
+  FinPour
+  Afficher ↵
+  Afficher L[1:3] + [0], 4 dans L, notes ↵
+Fin

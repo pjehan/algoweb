@@ -1,0 +1,29 @@
+Algorithme Chaînes de caractères
+
+Fonction estPalindrome(mot : chaîne) : booléen
+Variables
+  i : entier
+Début
+  Pour i de 0 à len(mot) div 2 - 1 faire
+    Si mot[i] ≠ mot[-1 - i] alors
+      Retourner faux
+    FinSi
+  FinPour
+  Retourner vrai
+FinFonction
+
+Variables
+  mot, inverse : chaîne
+  c : chaîne
+Début
+  Lire mot
+  inverse ← ""
+  Pour chaque c dans mot faire
+    inverse ← c + inverse
+  FinPour
+  Afficher "Inverse :", inverse ↵
+  Afficher "Palindrome :", estPalindrome(mot) ↵
+  Afficher mot[1:3], mot[:2], mot[2:], len(mot) ↵
+  Afficher ord("A"), chr(97), "a" dans mot, "Mot : " + mot + " (" + str(len(mot)) + ")" ↵
+  Afficher "Ligne 1\nLigne 2\t\"fin\"" ↵
+Fin
