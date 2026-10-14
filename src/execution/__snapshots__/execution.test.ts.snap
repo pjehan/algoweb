@@ -1,0 +1,155 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`erreurs d’exécution > bornes-alea 1`] = `
+{
+  "message": "randint(a, b) exige a ≤ b.",
+  "suggestion": undefined,
+}
+`;
+
+exports[`erreurs d’exécution > caractere-attendu 1`] = `
+{
+  "message": "ord attend un seul caractère, mais la chaîne en contient 2.",
+  "suggestion": undefined,
+}
+`;
+
+exports[`erreurs d’exécution > code-invalide 1`] = `
+{
+  "message": "chr attend un code compris entre 0 et 1114111.",
+  "suggestion": undefined,
+}
+`;
+
+exports[`erreurs d’exécution > collection-vide 1`] = `
+{
+  "message": "max ne s’applique pas à une liste ou une chaîne vide.",
+  "suggestion": undefined,
+}
+`;
+
+exports[`erreurs d’exécution > conversion-impossible 1`] = `
+{
+  "message": "Impossible de convertir « douze » en entier.",
+  "suggestion": undefined,
+}
+`;
+
+exports[`erreurs d’exécution > conversion-infini 1`] = `
+{
+  "message": "floor : impossible de convertir l’infini ou « nan » en entier.",
+  "suggestion": undefined,
+}
+`;
+
+exports[`erreurs d’exécution > division-par-zero 1`] = `
+{
+  "message": "Division par zéro.",
+  "suggestion": "Vérifiez que le diviseur est différent de 0 avant de diviser.",
+}
+`;
+
+exports[`erreurs d’exécution > entier-trop-grand 1`] = `
+{
+  "message": "Entier trop grand pour être converti en réel.",
+  "suggestion": undefined,
+}
+`;
+
+exports[`erreurs d’exécution > exposant-negatif 1`] = `
+{
+  "message": "Exposant négatif : le résultat n’est pas un entier.",
+  "suggestion": "Pour obtenir un réel, écrivez la base sous forme de réel : 2.0 ^ n.",
+}
+`;
+
+exports[`erreurs d’exécution > hors-domaine 1`] = `
+{
+  "message": "acos : la valeur est en dehors du domaine de la fonction.",
+  "suggestion": undefined,
+}
+`;
+
+exports[`erreurs d’exécution > indice-hors-limites 1`] = `
+{
+  "message": "Indice 3 hors limites : la liste contient 3 éléments (indices de 0 à 2, ou de -3 à -1).",
+  "suggestion": undefined,
+}
+`;
+
+exports[`erreurs d’exécution > logarithme-invalide 1`] = `
+{
+  "message": "log : logarithme d’un nombre négatif ou nul.",
+  "suggestion": undefined,
+}
+`;
+
+exports[`erreurs d’exécution > memoire-insuffisante 1`] = `
+{
+  "message": "Résultat trop volumineux : la mémoire est insuffisante.",
+  "suggestion": undefined,
+}
+`;
+
+exports[`erreurs d’exécution > operation-invalide 1`] = `
+{
+  "message": "L’opérateur + ne s’applique pas à une chaîne et un entier.",
+  "suggestion": undefined,
+}
+`;
+
+exports[`erreurs d’exécution > pas-nul 1`] = `
+{
+  "message": "Le pas de la boucle Pour vaut 0 : la boucle ne se terminerait jamais.",
+  "suggestion": undefined,
+}
+`;
+
+exports[`erreurs d’exécution > puissance-non-reelle 1`] = `
+{
+  "message": "Puissance non réelle : un nombre négatif ne peut pas être élevé à une puissance non entière.",
+  "suggestion": undefined,
+}
+`;
+
+exports[`erreurs d’exécution > racine-negative 1`] = `
+{
+  "message": "sqrt : racine carrée d’un nombre négatif.",
+  "suggestion": undefined,
+}
+`;
+
+exports[`erreurs d’exécution > recursion-trop-profonde 1`] = `
+{
+  "message": "Récursion trop profonde : plus de 1 000 appels imbriqués.",
+  "suggestion": "Vérifiez que la fonction atteint toujours un cas où elle ne s’appelle plus elle-même.",
+}
+`;
+
+exports[`erreurs d’exécution > resultat-trop-grand 1`] = `
+{
+  "message": "Résultat trop grand pour être représenté par un réel.",
+  "suggestion": undefined,
+}
+`;
+
+exports[`erreurs d’exécution > type-incompatible 1`] = `
+{
+  "message": "n est un entier : impossible d’y ranger la valeur 'a'.",
+  "suggestion": "La valeur provient sans doute d’une liste non typée : déclarez le type de ses éléments.",
+}
+`;
+
+exports[`erreurs d’exécution > variable-sans-valeur 1`] = `
+{
+  "message": "La variable n n’a pas de valeur.",
+  "suggestion": "Affectez-lui une valeur (n ← …) ou lisez-la (Lire n) avant de l’utiliser.",
+}
+`;
+
+exports[`erreurs d’exécution > zero-puissance-negative 1`] = `
+{
+  "message": "0 ne peut pas être élevé à une puissance négative (cela reviendrait à diviser par zéro).",
+  "suggestion": undefined,
+}
+`;

@@ -1,4 +1,5 @@
 import { libelleVersion } from '../version.ts'
+import { Demonstration } from './Demonstration.tsx'
 
 const exemple = `Algorithme Somme des pairs
 
@@ -26,7 +27,8 @@ export function Accueil() {
       <pre aria-label="Exemple d’algorithme">
         <code>{exemple}</code>
       </pre>
-      <p role="status">Application en cours de développement.</p>
+      <Demonstration source={exemple} />
+      <p>Application en cours de développement.</p>
       <footer>
         {libelleVersion()} · logiciel libre sous licence GPL-3.0
       </footer>

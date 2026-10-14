@@ -49,6 +49,16 @@ body {
   font: 0.95rem/1.45 ui-monospace, Consolas, monospace;
 }
 
+.demonstration button,
+.demonstration input {
+  font: inherit;
+  padding: 0.3rem 0.8rem;
+}
+
+.demonstration pre {
+  min-height: 3rem;
+}
+
 .accueil footer {
   margin-top: 2rem;
   color: var(--texte-doux);

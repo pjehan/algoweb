@@ -8,5 +8,6 @@
     "jsx": "preserve"
   },
   "include": ["src/langage", "src/execution", "src/import-algobox", "src/export", "src/version.ts"],
-  "exclude": ["src/**/*.test.ts"]
+  // Le Worker et son client relient le cœur au navigateur.
+  "exclude": ["src/**/*.test.ts", "src/execution/worker.ts", "src/execution/client.ts"]
 }

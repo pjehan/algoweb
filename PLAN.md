@@ -527,7 +527,9 @@ else:
 Différences connues, documentées dans l'aide :
 - les booléens s'affichent `vrai`/`faux` dans AlgoWeb et `True`/`False` en Python ;
 - une saisie invalide est redemandée par AlgoWeb, alors qu'elle provoque une erreur `ValueError` en Python ;
-- `Pause` devient un `input()`.
+- `Pause` devient un `input()` ;
+- une puissance entre entiers dont l'exposant est négatif (`2^n` avec `n < 0`) arrête AlgoWeb avec un message, car son résultat n'est pas un entier ; Python renvoie un réel. Un exposant négatif écrit directement (`2^-1`) donne un réel, comme en Python ;
+- les fonctions `exp`, `log`, `log10`, `cos`, `sin`, `tan`, `acos`, `asin` et `atan` peuvent différer de Python sur le dernier chiffre affiché : Python utilise la bibliothèque mathématique du système, dont les résultats varient déjà d'un système à l'autre. `sqrt`, les opérations arithmétiques et la puissance sont identiques.
 
 Validation : la CI exporte chaque programme du corpus de test, l'exécute avec CPython sur les mêmes entrées et compare les sorties ligne à ligne.
 
@@ -739,7 +741,8 @@ Les modules `langage`, `execution`, `import-algobox` et `export` sont écrits en
 
 ### 9.4 Moteur d'exécution
 
-- **Compilation.** L'AST typé est compilé en JavaScript, sous forme de fonctions génératrices : chaque instruction peut suspendre l'exécution (saisie, `Pause`, pas à pas, point d'arrêt). Le code produit est construit uniquement à partir de l'AST validé ; le texte de l'utilisateur n'est jamais évalué et les identifiants sont renommés.
+- **Compilation.** L'AST typé est compilé vers le code d'une machine à pile, exécuté par une boucle qui gère elle-même la pile des appels. L'exécution peut ainsi s'interrompre à toute instruction (saisie, `Pause`, pas à pas, point d'arrêt), la profondeur de récursion ne dépend pas de la pile de JavaScript, et le débogueur connaît directement les cadres d'appel. Aucun code JavaScript n'est généré ni évalué : le texte de l'utilisateur ne peut pas s'exécuter, et la politique de sécurité du contenu peut interdire `eval`.
+- **Performances mesurées.** Environ 60 millions d'instructions de la machine par seconde ; une boucle de 3 millions de tours s'exécute en 0,6 s.
 - **Isolement.** L'exécution a lieu dans un Web Worker dédié : l'interface ne se fige jamais, et Arrêter termine le Worker à coup sûr.
 - **Représentation des valeurs.**
   - Entier : `BigInt`. Réel : `number`. Booléen : `boolean`.
@@ -749,7 +752,7 @@ Les modules `langage`, `execution`, `import-algobox` et `export` sont écrits en
 - **Échanges avec l'interface.**
   - De l'interface vers le Worker : `lancer` (programme, mode, points d'arrêt, graine), `saisie`, `continuer`, `pas` (entrer, passer ou sortir), `pause`, `pointsArret`.
   - Du Worker vers l'interface : `sortie` (regroupée toutes les 50 ms environ), `demandeSaisie` (variable, type), `enPause` (ligne, variables, pile), `erreur` (ligne, message), `termine` (durée, nombre d'instructions).
-- **Performances visées.** Une dizaine de millions d'opérations simples en quelques secondes.
+- **Performances visées.** Une dizaine de millions d'opérations simples en quelques secondes (objectif atteint, voir ci-dessus).
 
 ### 9.5 Sécurité
 
