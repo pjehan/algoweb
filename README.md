@@ -19,6 +19,14 @@ npm run typecheck  # vérification des types
 npm run build      # construction dans dist/
 ```
 
+Les tests de validation croisée exécutent le Python exporté : ils nécessitent `python3` (3.12 ou plus récent), et sont ignorés en local s'il est absent.
+
+Pour ajouter un programme au corpus (`tests/programmes/`) : écrire `nom.algo`, éventuellement `nom.entree` (une saisie par ligne) et `nom.graine`, puis produire la sortie de référence avec CPython :
+
+```sh
+npm run corpus:reference tests/programmes/nom.algo
+```
+
 ## Organisation
 
 | Dossier | Contenu |

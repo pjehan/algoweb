@@ -528,10 +528,12 @@ Différences connues, documentées dans l'aide :
 - les booléens s'affichent `vrai`/`faux` dans AlgoWeb et `True`/`False` en Python ;
 - une saisie invalide est redemandée par AlgoWeb, alors qu'elle provoque une erreur `ValueError` en Python ;
 - `Pause` devient un `input()` ;
+- `Lire b`, pour un booléen, devient `b = input("b = ") == "vrai"` : Python ne vérifie pas la saisie, et toute autre réponse que `vrai` donne `False` ;
+- une puissance non réelle (`(-8)^0.5`) arrête AlgoWeb avec un message, alors que Python renvoie un nombre complexe ;
 - une puissance entre entiers dont l'exposant est négatif (`2^n` avec `n < 0`) arrête AlgoWeb avec un message, car son résultat n'est pas un entier ; Python renvoie un réel. Un exposant négatif écrit directement (`2^-1`) donne un réel, comme en Python ;
 - les fonctions `exp`, `log`, `log10`, `cos`, `sin`, `tan`, `acos`, `asin` et `atan` peuvent différer de Python sur le dernier chiffre affiché : Python utilise la bibliothèque mathématique du système, dont les résultats varient déjà d'un système à l'autre. `sqrt`, les opérations arithmétiques et la puissance sont identiques.
 
-Validation : la CI exporte chaque programme du corpus de test, l'exécute avec CPython sur les mêmes entrées et compare les sorties ligne à ligne.
+Validation : la CI exporte chaque programme du corpus de test, l'exécute avec CPython 3.12 sur les mêmes entrées et compare les sorties ligne à ligne, après avoir neutralisé les différences documentées (booléens, dernier chiffre des fonctions mathématiques). La somme `sum` étant compensée depuis Python 3.12, une version antérieure peut différer sur le dernier chiffre d'une somme de réels.
 
 ## 7. Formats, stockage, téléchargements et partage
 

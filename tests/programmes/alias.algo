@@ -1,0 +1,39 @@
+Algorithme Listes partagées
+
+Procédure remplir(L : liste d'entiers, n : entier)
+Variables
+  i : entier
+Début
+  Pour i de 1 à n faire
+    ajouter(L, i * i)
+  FinPour
+FinProcédure
+
+Variables
+  A, B : liste d'entiers
+  G : liste de listes d'entiers
+  x : entier
+  mots : liste de chaînes
+Début
+  A ← []
+  remplir(A, 4)
+  B ← A
+  ajouter(B, 99)
+  Afficher A, B, A = B ↵
+  G ← [[0] * 2] * 2
+  G[0][0] ← 5
+  Afficher G ↵
+  insérer(A, 100, -1)
+  insérer(A, -100, -2)
+  insérer(A, -1, -3)
+  supprimer(A, -2)
+  Afficher A, A[-1], A[1:-1], A[:2] + A[-2:] ↵
+  Pour chaque x dans A faire
+    Si x < 0 et len(A) < 12 alors
+      ajouter(A, 0)
+    FinSi
+  FinPour
+  Afficher A, 0 dans A, 50 dans A ↵
+  mots ← ["pomme", "kiwi", "abricot"]
+  Afficher mots, max(mots), mots[0][1:3], len(mots[2]), ["a", "l'arbre", "dit \"oui\""] ↵
+Fin

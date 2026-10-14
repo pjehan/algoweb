@@ -1,0 +1,30 @@
+Algorithme Saisies de tous types
+
+Fonction hanoi(n : entier, depart : chaîne, arrivee : chaîne, autre : chaîne) : entier
+Début
+  Si n = 0 alors
+    Retourner 0
+  FinSi
+  Retourner hanoi(n - 1, depart, autre, arrivee) + 1 + hanoi(n - 1, autre, arrivee, depart)
+FinFonction
+
+Variables
+  nom : chaîne
+  age : entier
+  taille : réel
+  majeur, inscrit : booléen
+  notes : liste de réels
+  i : entier
+Début
+  Lire nom, age
+  Lire taille
+  Lire inscrit
+  notes ← [0, 0, 0]
+  Pour i de 0 à 2 faire
+    Lire notes[i]
+  FinPour
+  majeur ← age ≥ 18
+  Afficher "Bonjour", nom + " !", "Âge :", age, "Majeur :", majeur ↵
+  Afficher "Taille :", taille, "Inscrit :", inscrit, "Notes :", notes, sum(notes) / len(notes) ↵
+  Afficher "Hanoï :", hanoi(10, "A", "C", "B") ↵
+Fin

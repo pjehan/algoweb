@@ -1,0 +1,36 @@
+Algorithme Conversions implicites
+
+// Chaque entier rangé dans un réel devient un réel, comme dans le Python exporté.
+Fonction moitie(x : réel) : réel
+Début
+  Retourner x / 2
+FinFonction
+
+Fonction entierEnReel(n : entier) : réel
+Début
+  Retourner n
+FinFonction
+
+Variables
+  x : réel
+  n : entier
+  R : liste de réels
+  L : liste d'entiers
+  v : réel
+Début
+  x ← 3
+  n ← 4
+  Afficher x, moitie(n), entierEnReel(n) ↵
+  R ← [1, 2.5, -3]
+  ajouter(R, n)
+  insérer(R, 0, 7)
+  R[1] ← 9
+  Afficher R ↵
+  L ← [1, 2, 3]
+  Pour chaque v dans L faire
+    Afficher v, ""
+  FinPour
+  Afficher ↵
+  x ← -2
+  Afficher x, n / 2, n * 1.0, max(n, 2.5), min(n, 2.5), round(x), abs(x) ↵
+Fin
