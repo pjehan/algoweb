@@ -967,3 +967,359 @@ table.variables .indice {
   font-size: 0.8rem;
   opacity: 0.85;
 }
+
+/* ------------------------------------------------------------ Mode d'édition */
+
+.choix-mode {
+  display: flex;
+}
+
+.choix-mode button {
+  border-radius: 0;
+}
+
+.choix-mode button:first-child {
+  border-radius: var(--rayon) 0 0 var(--rayon);
+}
+
+.choix-mode button:last-child {
+  border-radius: 0 var(--rayon) var(--rayon) 0;
+  border-left: none;
+}
+
+.choix-mode button[aria-checked='true'] {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--sur-accent);
+  font-weight: 600;
+}
+
+/* ------------------------------------------------------------ Éditeur par blocs */
+
+.editeur-blocs {
+  height: 100%;
+  overflow: auto;
+  padding: 0.6rem 1rem 3rem;
+  font-family: var(--police-code);
+  font-size: var(--taille-texte);
+  background: var(--fond-editeur);
+}
+
+.editeur-blocs .liste-blocs {
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0 1.4rem;
+  border-left: 2px solid var(--bordure);
+  margin-left: 0.55rem;
+}
+
+.editeur-blocs .principal > .liste-blocs,
+.editeur-blocs .sous-programme > .liste-blocs {
+  border-left-color: transparent;
+}
+
+.mot-cle {
+  color: var(--code-mot-cle);
+  font-weight: 600;
+}
+
+.operateur {
+  color: var(--code-operateur);
+}
+
+.ligne-section {
+  padding: 0.15rem 0;
+}
+
+.entete-algorithme .champ-bloc input {
+  font-weight: 700;
+}
+
+.sous-programme {
+  margin-bottom: 0.8rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px dashed var(--bordure);
+}
+
+.bloc {
+  outline-offset: 1px;
+}
+
+.bloc:focus-visible > .ligne-bloc:first-child,
+.bloc:focus-visible > .ligne-bloc {
+  background: var(--ligne-active);
+}
+
+.ligne-bloc {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  min-height: 1.9em;
+  border-radius: var(--rayon);
+}
+
+.ligne-bloc:hover {
+  background: var(--ligne-active);
+}
+
+.ligne-bloc.bloc-courant {
+  background: var(--fond-ligne-courante);
+  box-shadow: inset 4px 0 0 var(--bord-ligne-courante);
+}
+
+.contenu-bloc {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem;
+  flex: 1;
+}
+
+.poignee {
+  width: 1.1rem;
+  flex: none;
+  border: none;
+  background: none;
+  padding: 0;
+  color: var(--texte-doux);
+  cursor: grab;
+  opacity: 0;
+}
+
+.ligne-bloc:hover .poignee,
+.bloc:focus-within > .ligne-bloc .poignee {
+  opacity: 1;
+}
+
+.editeur-blocs .point-arret {
+  width: 1rem;
+  flex: none;
+  text-align: center;
+}
+
+.champ-bloc {
+  position: relative;
+  display: inline-block;
+}
+
+.champ-bloc input {
+  font: inherit;
+  border: 1px solid transparent;
+  border-bottom: 1px dashed var(--bordure);
+  border-radius: 3px;
+  background: var(--fond-panneau);
+  padding: 0 0.25rem;
+  min-width: 2ch;
+}
+
+.champ-bloc input:hover,
+.champ-bloc input:focus {
+  border-color: var(--accent);
+}
+
+.champ-bloc input[aria-invalid='true'] {
+  border-color: var(--erreur);
+  border-style: solid;
+}
+
+.propositions {
+  position: absolute;
+  z-index: 6;
+  left: 0;
+  top: 100%;
+  margin: 0;
+  padding: 0.2rem;
+  list-style: none;
+  min-width: 10rem;
+  background: var(--fond-panneau);
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon);
+  box-shadow: 0 6px 18px rgb(0 0 0 / 0.15);
+}
+
+.propositions li {
+  padding: 0.15rem 0.4rem;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.propositions li[aria-selected='true'] {
+  background: var(--accent);
+  color: var(--sur-accent);
+}
+
+.commentaire-fin,
+.commentaire-bloc,
+.commentaire-haut {
+  color: var(--code-commentaire);
+  font-style: italic;
+}
+
+.commentaire-fin {
+  margin-left: 0.6rem;
+}
+
+.ligne-vide,
+.liste-vide {
+  color: var(--texte-doux);
+  font-size: 0.8em;
+  font-family: var(--police);
+  opacity: 0.7;
+}
+
+.liste-vide {
+  display: block;
+  padding: 0.1rem 0 0.1rem 2.3rem;
+}
+
+.ligne-haut-vide {
+  height: 0.8em;
+}
+
+.retour {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.15rem;
+  color: var(--code-constante);
+}
+
+.editeur-blocs button.retirer,
+.editeur-blocs button.ajout {
+  font-family: var(--police);
+  font-size: 0.75rem;
+  padding: 0.05rem 0.4rem;
+  margin-left: 0.4rem;
+  color: var(--texte-doux);
+}
+
+.editeur-blocs button.retirer {
+  opacity: 0;
+}
+
+.ligne-bloc:hover button.retirer,
+.ligne-bloc:focus-within button.retirer,
+.ligne-section:hover button.retirer,
+.ligne-section:focus-within button.retirer {
+  opacity: 1;
+}
+
+.editeur-blocs button.replier {
+  border: none;
+  background: none;
+  padding: 0 0.2rem 0 0;
+  color: var(--texte-doux);
+}
+
+.editeur-blocs .replie {
+  margin: 0 0 0 2.6rem;
+  color: var(--texte-doux);
+  font-size: 0.85em;
+}
+
+.fin-bloc {
+  min-height: 1.6em;
+}
+
+.erreurs-bloc {
+  margin: 0 0 0.2rem 2.3rem;
+  padding: 0;
+  list-style: none;
+  font-family: var(--police);
+  font-size: 0.82rem;
+  color: var(--erreur);
+}
+
+.menu-bloc > summary {
+  opacity: 0;
+}
+
+.ligne-bloc:hover .menu-bloc > summary,
+.bloc:focus-within > .ligne-bloc .menu-bloc > summary,
+.menu-bloc[open] > summary {
+  opacity: 1;
+}
+
+.menu-bloc > div {
+  font-family: var(--police);
+}
+
+.menu-bloc kbd {
+  float: right;
+  margin-left: 1rem;
+  font-size: 0.75rem;
+  color: var(--texte-doux);
+}
+
+.bloc,
+.fin-liste {
+  position: relative;
+}
+
+.fin-liste {
+  min-height: 0.6rem;
+  list-style: none;
+}
+
+.point-insertion {
+  position: absolute;
+  top: -0.35rem;
+  left: -1.2rem;
+  right: 0;
+  height: 0.7rem;
+  z-index: 1;
+}
+
+.fin-liste .point-insertion {
+  top: -0.1rem;
+}
+
+.point-insertion > button {
+  position: absolute;
+  left: 0;
+  top: -0.25rem;
+  width: 1.2rem;
+  height: 1.2rem;
+  padding: 0;
+  font-size: 0.8rem;
+  line-height: 1;
+  border-radius: 50%;
+  opacity: 0;
+  z-index: 2;
+}
+
+.point-insertion:hover > button,
+.point-insertion.ouvert > button {
+  opacity: 1;
+}
+
+.point-insertion.survol::after {
+  content: '';
+  position: absolute;
+  left: 1.2rem;
+  right: 0;
+  top: 0.2rem;
+  height: 0.3rem;
+  background: var(--accent);
+  border-radius: 3px;
+}
+
+.menu-insertion {
+  position: absolute;
+  z-index: 7;
+  left: 1.4rem;
+  top: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  max-width: 26rem;
+  padding: 0.4rem;
+  font-family: var(--police);
+  background: var(--fond-panneau);
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon);
+  box-shadow: 0 6px 18px rgb(0 0 0 / 0.15);
+}
+
+.menu-insertion button {
+  font-size: 0.8rem;
+}

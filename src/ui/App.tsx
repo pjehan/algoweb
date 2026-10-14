@@ -9,6 +9,7 @@ import { Fenetres } from './composants/Fenetres.tsx'
 import { Importation } from './composants/Importation.tsx'
 import { Palette } from './composants/Palette.tsx'
 import { PaletteCommandes } from './composants/PaletteCommandes.tsx'
+import { EditeurBlocs } from './blocs/EditeurBlocs.tsx'
 import { Editeur } from './editeur/Editeur.tsx'
 import { useEtat } from './etat.ts'
 
@@ -65,6 +66,7 @@ export function App({ stockagePersistant }: { stockagePersistant: boolean }) {
   const [rappelMasque, setRappelMasque] = useState(false)
   const sauvegarde = useEtat((e) => e.sauvegarde)
   const annonce = useEtat((e) => e.annonce)
+  const modeEdition = useEtat((e) => e.modeEdition)
   const index = useEtat((e) => e.index)
   const bibliotheque = useEtat((e) => e.bibliotheque)
   const double = useOngletsMultiples()
@@ -182,7 +184,7 @@ export function App({ stockagePersistant }: { stockagePersistant: boolean }) {
         <main id="panneau-editeur" className="colonne centre" data-panneau="editeur">
           <h1 className="visuellement-cache">Éditeur</h1>
           <div id="editeur" className="zone-editeur">
-            <Editeur />
+            {modeEdition === 'blocs' ? <EditeurBlocs /> : <Editeur />}
           </div>
           <Diagnostics />
         </main>

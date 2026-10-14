@@ -644,10 +644,11 @@ L'interface doit le dire clairement et faciliter les téléchargements.
 
 **Éditeur, mode blocs.**
 - Arbre des instructions avec repères d'indentation ; on peut replier les blocs.
-- Les champs se modifient directement dans la ligne ; les expressions bénéficient de l'autocomplétion et d'une vérification immédiate.
-- Points d'insertion entre les lignes, glisser-déposer.
-- Annuler et rétablir, navigation complète au clavier.
-- Menu contextuel : dupliquer, supprimer, commenter, déplacer.
+- Les champs se modifient directement dans la ligne ; les expressions bénéficient de l'autocomplétion et d'une vérification immédiate (les erreurs s'affichent sous le bloc concerné).
+- Points d'insertion entre les lignes (bouton « + »), glisser-déposer ; la palette insère après le bloc qui a le focus.
+- Annuler et rétablir, navigation complète au clavier : flèches pour passer d'un bloc à l'autre, Entrée pour modifier, Échap pour revenir au bloc, Alt+↑/↓ pour déplacer (alternative au glisser-déposer, qui fait entrer et sortir des blocs voisins), Ctrl+D dupliquer, Suppr supprimer, Ctrl+/ commenter, ←/→ replier et déplier.
+- Menu de chaque bloc : monter, descendre, dupliquer, commenter, point d'arrêt, supprimer.
+- Mise en œuvre : le modèle des blocs garde chaque expression sous forme de texte, si bien qu'un champ en cours de saisie, même incorrect, n'est jamais perdu ; le texte est produit à chaque modification. L'historique d'annulation est une pile de modèles (Immer n'a pas été nécessaire). Les blocs forment des listes imbriquées, et non un arbre ARIA (`tree`), qui n'admet pas de champs de saisie dans ses éléments.
 
 **Éditeur, mode texte (CodeMirror 6).**
 - Coloration syntaxique, diagnostics en continu.

@@ -13,6 +13,7 @@ export function BarreSuperieure({ ouvrir }: { ouvrir: (f: Fenetre) => void }) {
   const courantId = useEtat((e) => e.courantId)
   const sauvegarde = useEtat((e) => e.sauvegarde)
   const execution = useEtat((e) => e.execution)
+  const modeEdition = useEtat((e) => e.modeEdition)
   const etat = useEtat.getState
 
   const valider = (champ: HTMLInputElement) => {
@@ -51,6 +52,13 @@ export function BarreSuperieure({ ouvrir }: { ouvrir: (f: Fenetre) => void }) {
       <p className={`statut-sauvegarde ${sauvegarde.etat}`} role="status">
         {statut}
       </p>
+      <div className="choix-mode" role="radiogroup" aria-label="Mode d’édition">
+        {(['texte', 'blocs'] as const).map((mode) => (
+          <button key={mode} type="button" role="radio" aria-checked={modeEdition === mode} onClick={() => etat().changerMode(mode)}>
+            {mode === 'texte' ? 'Texte' : 'Blocs'}
+          </button>
+        ))}
+      </div>
       <div className="actions-execution" role="group" aria-label="Exécution">
         {execution === 'pause' ? (
           <button type="button" className="principal" onClick={() => etat().continuer()}>

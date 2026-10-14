@@ -3,6 +3,8 @@ import { MoteurExecution } from '../execution/client.ts'
 import type { CadreAffiche, ModePas } from '../execution/machine.ts'
 import type { MessageDuMoteur } from '../execution/session.ts'
 import type { Diagnostic } from '../langage/messages.ts'
+import { analyser } from '../langage/analyse.ts'
+import { formater } from '../langage/formateur.ts'
 import { convertirNotation } from '../langage/notation.ts'
 import { Bibliotheque, ErreurQuota, type Metadonnees, type Stockage } from '../stockage/bibliotheque.ts'
 import { nomDuCode, nouveauDocument, renommerCode, type DocumentAlgo } from '../stockage/document.ts'
@@ -86,6 +88,8 @@ interface Etat {
   /** Exécution animée : un pas toutes les `vitesse` millisecondes. */
   animation: boolean
   vitesse: Vitesse
+  /** Mode d'édition en cours ; le mode blocs exige un texte sans erreur de syntaxe. */
+  modeEdition: 'texte' | 'blocs'
 
   initialiser: (stockage: Stockage) => void
   recharger: () => void
@@ -118,6 +122,7 @@ interface Etat {
   definirPointsArret: (lignes: number[]) => void
   basculerPointArret: (ligne: number) => void
   choisirCadre: (k: number) => void
+  changerMode: (mode: 'texte' | 'blocs') => boolean
   saisir: (texte: string) => void
   effacerConsole: () => void
 }
@@ -278,6 +283,7 @@ export const useEtat = create<Etat>()((set, get) => {
     cadreChoisi: 0,
     animation: false,
     vitesse: 'normale',
+    modeEdition: 'texte',
 
     initialiser: (stockage) => {
       const bibliotheque = new Bibliotheque(stockage)
@@ -292,6 +298,7 @@ export const useEtat = create<Etat>()((set, get) => {
       } else {
         get().nouveau()
       }
+      if (preferences.modeEdition === 'blocs') get().changerMode('blocs')
     },
 
     recharger: () => {
@@ -455,6 +462,29 @@ export const useEtat = create<Etat>()((set, get) => {
     },
 
     choisirCadre: (cadreChoisi) => set({ cadreChoisi }),
+
+    changerMode: (mode) => {
+      if (mode === 'texte') {
+        set({ modeEdition: 'texte' })
+        return true
+      }
+      const { texte, preferences, versionTexte } = get()
+      const { programme, diagnostics } = analyser(texte)
+      if (diagnostics.length > 0) {
+        get().annoncer('Le mode blocs exige un texte sans erreur de syntaxe : corrigez d’abord les erreurs.')
+        get().allerA(diagnostics[0].etendue.ligne, diagnostics[0].etendue.colonne)
+        set({ modeEdition: 'texte' })
+        return false
+      }
+      // Le texte prend sa forme canonique : c'est celle que produisent les blocs.
+      const canonique = formater(programme, { notation: preferences.notation })
+      if (canonique !== texte) {
+        set({ texte: canonique, versionTexte: versionTexte + 1 })
+        get().modifierTexte(canonique)
+      }
+      set({ modeEdition: 'blocs' })
+      return true
+    },
 
     saisir: (texte) => {
       const saisie = get().saisie

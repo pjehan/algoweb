@@ -27,6 +27,7 @@ Le format suit [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/) et le pr
   - préférences (thème, taille du texte, notation des fonctions), propriétés de l'algorithme (description, graine), À propos.
 - Débogueur (phase 5) : pas à pas (pas suivant, pas principal, sortir de la fonction), points d'arrêt dans la marge qui suivent les modifications du texte, ligne courante surlignée, variables (valeurs modifiées mises en évidence, listes dépliables), pile d'appels, exécution animée, suspension d'une exécution en cours.
 - Palette de commandes (Ctrl+K), commande « Mettre le texte en forme ».
+- Éditeur par blocs (phase 5), synchronisé avec le texte et sans perte (commentaires et lignes vides compris) : champs modifiables avec autocomplétion, erreurs sous chaque bloc, insertion par la palette ou le bouton « + », glisser-déposer, navigation et édition au clavier, annuler et rétablir, repli des blocs, débogueur. Mode d'édition au choix dans la barre et dans les préférences.
 - Tests de bout en bout Playwright avec contrôle d'accessibilité axe-core, sur Chromium, Firefox et WebKit dans la CI (branche main).
 
 ### Modifications du plan

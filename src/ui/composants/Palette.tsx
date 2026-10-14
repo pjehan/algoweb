@@ -1,4 +1,5 @@
 import { useMemo } from 'react'
+import { blocsActif } from '../blocs/contexte.ts'
 import { editeurActif } from '../editeur/actif.ts'
 import { insererModele } from '../editeur/extensions.ts'
 import { CATEGORIES, modeles, texteSimple } from '../editeur/modeles.ts'
@@ -29,7 +30,10 @@ export function Palette() {
                     title={m.description}
                     aria-description={m.description}
                     onDragStart={(e) => e.dataTransfer.setData('text/plain', texteSimple(m.modele) + (m.bloc ? '\n' : ''))}
-                    onClick={() => editeurActif.vue && insererModele(editeurActif.vue, m)}
+                    onClick={() => {
+                      if (useEtat.getState().modeEdition === 'blocs') blocsActif.inserer?.(m)
+                      else if (editeurActif.vue) insererModele(editeurActif.vue, m)
+                    }}
                   >
                     {m.libelle}
                   </button>

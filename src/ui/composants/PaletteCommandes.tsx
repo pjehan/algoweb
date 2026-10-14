@@ -37,6 +37,8 @@ function commandes(ouvrir: (f: Fenetre) => void): Commande[] {
     },
     { libelle: 'Retirer tous les points d’arrêt', action: () => etat().definirPointsArret([]) },
     { libelle: 'Mettre le texte en forme', action: () => void mettreEnForme() },
+    { libelle: 'Passer en mode texte', action: () => etat().changerMode('texte'), disponible: () => etat().modeEdition === 'blocs' },
+    { libelle: 'Passer en mode blocs', action: () => etat().changerMode('blocs'), disponible: () => etat().modeEdition === 'texte' },
     { libelle: 'Rechercher et remplacer', raccourci: 'Ctrl+F', action: () => vue() && openSearchPanel(vue()!) },
     { libelle: 'Nouvel algorithme', action: () => etat().nouveau() },
     { libelle: 'Dupliquer l’algorithme', action: () => etat().courantId && etat().dupliquer(etat().courantId!) },

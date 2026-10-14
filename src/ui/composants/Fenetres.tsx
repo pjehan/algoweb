@@ -47,12 +47,12 @@ export function Preferences({ ouvert, fermer }: { ouvert: boolean; fermer: () =>
         <p className="aide">Les deux notations sont toujours acceptées à la saisie. Les fichiers enregistrés utilisent les noms Python.</p>
       </fieldset>
       <fieldset>
-        <legend>Mode d’édition</legend>
+        <legend>Mode d’édition à l’ouverture</legend>
         <label>
-          <input type="radio" name="mode" checked readOnly /> Texte
+          <input type="radio" name="mode" checked={p.modeEdition === 'texte'} onChange={() => definir({ modeEdition: 'texte' })} /> Texte
         </label>
         <label>
-          <input type="radio" name="mode" disabled /> Blocs (bientôt disponible)
+          <input type="radio" name="mode" checked={p.modeEdition === 'blocs'} onChange={() => definir({ modeEdition: 'blocs' })} /> Blocs
         </label>
       </fieldset>
     </Dialogue>
