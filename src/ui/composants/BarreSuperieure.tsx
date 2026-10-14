@@ -1,36 +1,11 @@
-import { exporterTexteEnPython } from '../../export/index.ts'
-import { ecrireDocument, nomDeFichier } from '../../stockage/document.ts'
-import { fermerMenu } from '../actions.ts'
+import { exporter, fermerMenu } from '../actions.ts'
 import { useEtat } from '../etat.ts'
-import { telecharger } from '../telechargement.ts'
 
-export type Fenetre = 'preferences' | 'proprietes' | 'apropos' | null
+export type Fenetre = 'preferences' | 'proprietes' | 'apropos' | 'commandes' | null
 
 /** « 14 h 32 ». */
 function heure(d: Date): string {
   return `${d.getHours()} h ${String(d.getMinutes()).padStart(2, '0')}`
-}
-
-/** Exporte l'algorithme ouvert ; refuse l'export Python d'un algorithme qui contient des erreurs. */
-function exporter(format: 'json' | 'py' | 'txt'): void {
-  const etat = useEtat.getState()
-  etat.enregistrer()
-  const doc = useEtat.getState().document
-  if (!doc) return
-  if (format === 'json') {
-    telecharger(nomDeFichier(doc.nom, 'json'), ecrireDocument(doc), 'application/json')
-  } else if (format === 'txt') {
-    telecharger(nomDeFichier(doc.nom, 'txt'), etat.texte, 'text/plain;charset=utf-8')
-  } else {
-    const r = exporterTexteEnPython(etat.texte, { nom: doc.nom, description: doc.description, graine: doc.graine === null ? null : BigInt(doc.graine), date: new Date() })
-    if ('python' in r) {
-      telecharger(nomDeFichier(doc.nom, 'py'), r.python, 'text/x-python;charset=utf-8')
-    } else {
-      const premiere = r.diagnostics.find((d) => d.gravite === 'erreur')
-      etat.annoncer('L’algorithme contient des erreurs : corrigez-les avant de l’exporter en Python.')
-      if (premiere) etat.allerA(premiere.etendue.ligne, premiere.etendue.colonne)
-    }
-  }
 }
 
 export function BarreSuperieure({ ouvrir }: { ouvrir: (f: Fenetre) => void }) {
@@ -86,6 +61,9 @@ export function BarreSuperieure({ ouvrir }: { ouvrir: (f: Fenetre) => void }) {
             ▶ Exécuter
           </button>
         )}
+        <button type="button" onClick={() => etat().executerPasAPas()} title="Exécuter ligne par ligne, en s’arrêtant sur la première">
+          Pas à pas
+        </button>
         <button type="button" onClick={() => etat().arreter()} disabled={execution === 'arrete'} aria-keyshortcuts="Escape" title="Arrêter (Échap)">
           ■ Arrêter
         </button>
@@ -113,6 +91,9 @@ export function BarreSuperieure({ ouvrir }: { ouvrir: (f: Fenetre) => void }) {
         </button>
         <button type="button" onClick={() => ouvrir('apropos')}>
           À propos
+        </button>
+        <button type="button" className="raccourci-commandes" onClick={() => ouvrir('commandes')} title="Toutes les commandes (Ctrl+K)" aria-keyshortcuts="Control+K">
+          Commandes
         </button>
       </div>
     </header>

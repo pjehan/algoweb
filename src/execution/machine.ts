@@ -417,10 +417,11 @@ export class Machine {
 
   private raisonArret(ligne: number): 'pas' | 'point-arret' | 'demande' | undefined {
     if (this.arretDemande) return 'demande'
+    // Un pas qui arrive sur un point d'arrêt est signalé comme point d'arrêt (l'animation s'y interrompt).
+    if (this.pointsArret.has(ligne)) return 'point-arret'
     if (this.mode === 'entrer') return 'pas'
     if (this.mode === 'passer' && this.cadres.length <= this.profondeurReference) return 'pas'
     if (this.mode === 'sortir' && this.cadres.length < this.profondeurReference) return 'pas'
-    if (this.pointsArret.has(ligne)) return 'point-arret'
     return undefined
   }
 

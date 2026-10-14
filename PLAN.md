@@ -666,6 +666,8 @@ L'interface doit le dire clairement et faciliter les téléchargements.
 **Débogueur.**
 - Commandes : « Pas à pas » démarre sur la première ligne ; puis « Pas suivant » (entre dans les fonctions), « Pas principal » (passe par-dessus les appels), « Sortir de la fonction », Continuer, Arrêter.
 - Points d'arrêt ; ligne courante surlignée dans l'éditeur ; vitesse réglable pour une exécution animée.
+- « Suspendre » interrompt une exécution en cours à la ligne où elle se trouve (utile pour une boucle infinie).
+- Un pas qui arrive sur un point d'arrêt est signalé comme point d'arrêt : l'exécution animée s'y interrompt.
 - L'instruction `Pause` agit comme un point d'arrêt.
 
 **Diagnostics.** Liste des erreurs et avertissements ; un clic mène à la ligne concernée.
@@ -692,12 +694,14 @@ L'interface doit le dire clairement et faciliter les téléchargements.
 
 **Forme canonique.** Quand le curseur quitte une ligne, ou que l'éditeur perd le focus, ses mots-clés sont réécrits dans leur forme canonique (`debut` devient `Début`, `fin si` devient `FinSi`). La réécriture n'a pas lieu pendant la frappe, pour ne pas déplacer le texte sous les doigts de l'étudiant.
 
-**Raccourcis.** Liste définitive en phases 4 et 5 :
+**Raccourcis.**
 - Ctrl+Entrée : exécuter ; Échap : arrêter ;
 - Ctrl+S : enregistrer ; Ctrl+Z et Ctrl+Y : annuler et rétablir ;
-- Ctrl+K : palette de commandes.
+- Ctrl+K : palette de commandes (toutes les actions, par leur nom) ;
+- Ctrl+/ : mettre en commentaire ; Ctrl+F : rechercher et remplacer ;
+- débogueur, selon la convention des environnements JetBrains : F7 pas suivant, F8 pas principal, Maj+F8 sortir de la fonction, F9 continuer, Ctrl+F8 point d'arrêt sur la ligne du curseur.
 
-Les raccourcis réservés par les navigateurs (Ctrl+T, Ctrl+N, Ctrl+W, Ctrl+Q) sont exclus.
+Les raccourcis réservés par les navigateurs (Ctrl+T, Ctrl+N, Ctrl+W, Ctrl+Q, F5, F11) sont exclus.
 
 ## 9. Architecture technique
 

@@ -3,10 +3,12 @@ import { BarreSuperieure, type Fenetre } from './composants/BarreSuperieure.tsx'
 import { installerFermetureMenus, toutTelecharger } from './actions.ts'
 import { Bibliotheque } from './composants/Bibliotheque.tsx'
 import { Console } from './composants/Console.tsx'
+import { BarreDebogage, Inspection } from './composants/Debogueur.tsx'
 import { Diagnostics } from './composants/Diagnostics.tsx'
 import { Fenetres } from './composants/Fenetres.tsx'
 import { Importation } from './composants/Importation.tsx'
 import { Palette } from './composants/Palette.tsx'
+import { PaletteCommandes } from './composants/PaletteCommandes.tsx'
 import { Editeur } from './editeur/Editeur.tsx'
 import { useEtat } from './etat.ts'
 
@@ -18,23 +20,41 @@ const ONGLETS: [Onglet, string][] = [
   ['console', 'Console'],
 ]
 
+/**
+ * Signale qu'un même algorithme est ouvert dans deux onglets (PLAN.md,
+ * section 7.2). Un seul canal par page ; chaque onglet annonce l'algorithme
+ * qu'il ouvre, et celui qui a le même algorithme ouvert répond.
+ */
 const identifiantOnglet = Math.random().toString(36).slice(2)
+type MessageOnglet = { type: 'ouvert' | 'aussi' | 'ferme'; id: string; onglet: string }
+const canalOnglets = typeof BroadcastChannel === 'undefined' ? null : new BroadcastChannel('algoweb')
 
-/** Signale qu'un même algorithme est ouvert dans deux onglets (PLAN.md, section 7.2). */
 function useOngletsMultiples(): boolean {
   const courantId = useEtat((e) => e.courantId)
   /** Algorithme signalé comme ouvert ailleurs. */
   const [double, setDouble] = useState<string | null>(null)
   useEffect(() => {
-    if (!courantId || typeof BroadcastChannel === 'undefined') return
-    const canal = new BroadcastChannel('algoweb')
-    canal.onmessage = (e: MessageEvent<{ type: string; id: string; onglet: string }>) => {
-      if (e.data.id !== courantId || e.data.onglet === identifiantOnglet) return
-      if (e.data.type === 'ouvert') canal.postMessage({ type: 'deja-ouvert', id: courantId, onglet: identifiantOnglet })
+    if (!canalOnglets || !courantId) return
+    const recevoir = (e: MessageEvent<MessageOnglet>) => {
+      const m = e.data
+      if (m.onglet === identifiantOnglet || m.id !== courantId) return
+      if (m.type === 'ferme') {
+        setDouble(null)
+        return
+      }
+      if (m.type === 'ouvert') canalOnglets.postMessage({ type: 'aussi', id: courantId, onglet: identifiantOnglet } satisfies MessageOnglet)
       setDouble(courantId)
     }
-    canal.postMessage({ type: 'ouvert', id: courantId, onglet: identifiantOnglet })
-    return () => canal.close()
+    // L'onglet qui se ferme, ou qui ouvre un autre algorithme, le signale aux autres.
+    const fermer = () => canalOnglets.postMessage({ type: 'ferme', id: courantId, onglet: identifiantOnglet } satisfies MessageOnglet)
+    canalOnglets.addEventListener('message', recevoir)
+    window.addEventListener('pagehide', fermer)
+    canalOnglets.postMessage({ type: 'ouvert', id: courantId, onglet: identifiantOnglet } satisfies MessageOnglet)
+    return () => {
+      fermer()
+      canalOnglets.removeEventListener('message', recevoir)
+      window.removeEventListener('pagehide', fermer)
+    }
   }, [courantId])
   return double !== null && double === courantId
 }
@@ -61,6 +81,15 @@ export function App({ stockagePersistant }: { stockagePersistant: boolean }) {
       } else if (mod && e.key === 'Enter') {
         e.preventDefault()
         etat().executer()
+      } else if (mod && e.key.toLowerCase() === 'k') {
+        e.preventDefault()
+        setFenetre('commandes')
+      } else if (e.key === 'F7' || e.key === 'F8' || e.key === 'F9') {
+        // Débogueur : F7 pas suivant, F8 pas principal (Maj+F8 sortir), F9 continuer.
+        if (mod || etat().execution !== 'pause') return
+        e.preventDefault()
+        if (e.key === 'F9') etat().continuer()
+        else etat().pas(e.key === 'F7' ? 'entrer' : e.shiftKey ? 'sortir' : 'passer')
       } else if (e.key === 'Escape' && etat().execution !== 'arrete' && !document.querySelector('dialog[open]')) {
         etat().arreter()
       }
@@ -102,6 +131,7 @@ export function App({ stockagePersistant }: { stockagePersistant: boolean }) {
         Aller à l’éditeur
       </a>
       <BarreSuperieure ouvrir={setFenetre} />
+      <BarreDebogage />
 
       <div className="bandeaux">
         {!stockagePersistant && (
@@ -158,6 +188,7 @@ export function App({ stockagePersistant }: { stockagePersistant: boolean }) {
         </main>
         <aside id="panneau-console" className="colonne droite" aria-label="Console" data-panneau="console">
           <Console />
+          <Inspection />
         </aside>
       </div>
 
@@ -173,6 +204,7 @@ export function App({ stockagePersistant }: { stockagePersistant: boolean }) {
         </p>
       )}
       <Fenetres fenetre={fenetre} fermer={() => setFenetre(null)} />
+      <PaletteCommandes ouvert={fenetre === 'commandes'} fermer={() => setFenetre(null)} ouvrir={setFenetre} />
       <Importation />
     </div>
   )

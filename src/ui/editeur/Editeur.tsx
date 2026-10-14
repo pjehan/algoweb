@@ -3,6 +3,7 @@ import { EditorView } from '@codemirror/view'
 import { useEffect, useRef } from 'react'
 import { useEtat } from '../etat.ts'
 import { editeurActif } from './actif.ts'
+import { debogage, effetPointsArret, surlignerLignes } from './debogage.ts'
 import { extensions } from './extensions.ts'
 
 /** Marque les modifications qui viennent de l'application et non de l'utilisateur. */
@@ -13,6 +14,8 @@ function creerEtat(texte: string): EditorState {
   return EditorState.create({
     doc: texte,
     extensions: [
+      // En premier : la marge des points d'arrêt est la plus à gauche.
+      debogage((lignes) => etat().definirPointsArret(lignes)),
       extensions({
         notation: () => etat().preferences.notation,
         diagnostics: (d) => etat().definirDiagnostics(d),
@@ -51,8 +54,20 @@ export function Editeur() {
   useEffect(() => {
     const v = vue.current
     if (!v) return
-    v.setState(creerEtat(useEtat.getState().texte))
+    const etat = useEtat.getState()
+    v.setState(creerEtat(etat.texte))
+    if (courantId) v.dispatch({ effects: effetPointsArret(etat.pointsArret[courantId] ?? []) })
   }, [courantId, notation])
+
+  // Ligne en cours d'exécution pendant une pause, et ligne d'appel du cadre choisi dans la pile.
+  const pause = useEtat((e) => e.pause)
+  const cadreChoisi = useEtat((e) => e.cadreChoisi)
+  useEffect(() => {
+    const v = vue.current
+    if (!v) return
+    const appel = pause && cadreChoisi < pause.pile.length - 1 ? pause.pile[cadreChoisi].ligne : null
+    surlignerLignes(v, { courante: pause?.ligne ?? null, appel })
+  }, [pause, cadreChoisi])
 
   // Texte remplacé par l'application (renommage) : modification annulable.
   useEffect(() => {

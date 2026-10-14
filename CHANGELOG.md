@@ -25,6 +25,8 @@ Le format suit [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/) et le pr
   - bibliothèque locale : sauvegarde automatique, corbeille de 30 jours, recherche et tri, jauge d'occupation, stockage plein, rappel de sauvegarde, alerte si l'algorithme est ouvert dans deux onglets ;
   - téléchargements JSON, Python, texte et ZIP ; imports JSON et ZIP avec gestion des conflits de noms ;
   - préférences (thème, taille du texte, notation des fonctions), propriétés de l'algorithme (description, graine), À propos.
+- Débogueur (phase 5) : pas à pas (pas suivant, pas principal, sortir de la fonction), points d'arrêt dans la marge qui suivent les modifications du texte, ligne courante surlignée, variables (valeurs modifiées mises en évidence, listes dépliables), pile d'appels, exécution animée, suspension d'une exécution en cours.
+- Palette de commandes (Ctrl+K), commande « Mettre le texte en forme ».
 - Tests de bout en bout Playwright avec contrôle d'accessibilité axe-core, sur Chromium, Firefox et WebKit dans la CI (branche main).
 
 ### Modifications du plan

@@ -20,6 +20,9 @@
   --succes: #1a7f37;
   --ligne-active: rgb(29 78 216 / 0.05); /* semi-transparent : la sélection est dessinée dessous */
   --selection: #c9dafc;
+  --fond-ligne-courante: rgb(250 204 21 / 0.28);
+  --bord-ligne-courante: #b45309;
+  --fond-ligne-appel: rgb(89 99 110 / 0.12);
 
   --code-mot-cle: #1d4ed8;
   --code-type: #7a3e9d;
@@ -63,6 +66,9 @@
     --succes: #56d364;
     --ligne-active: rgb(110 168 255 / 0.07);
     --selection: #264f78;
+    --fond-ligne-courante: rgb(250 204 21 / 0.18);
+    --bord-ligne-courante: #facc15;
+    --fond-ligne-appel: rgb(158 167 179 / 0.15);
     --code-mot-cle: #79b8ff;
     --code-type: #d2a8ff;
     --code-constante: #56d4dd;
@@ -96,6 +102,9 @@
   --succes: #56d364;
   --ligne-active: rgb(110 168 255 / 0.07);
   --selection: #264f78;
+  --fond-ligne-courante: rgb(250 204 21 / 0.18);
+  --bord-ligne-courante: #facc15;
+  --fond-ligne-appel: rgb(158 167 179 / 0.15);
   --code-mot-cle: #79b8ff;
   --code-type: #d2a8ff;
   --code-constante: #56d4dd;
@@ -776,4 +785,185 @@ a {
   justify-content: flex-end;
   gap: 0.5rem;
   margin-top: 1rem;
+}
+
+/* ------------------------------------------------------------ Débogueur */
+
+.cm-gutter-arret {
+  width: 1.2rem;
+  cursor: pointer;
+}
+
+.cm-gutter-arret .cm-gutterElement {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.point-arret {
+  color: var(--erreur);
+  font-size: 0.9em;
+}
+
+.cm-gutter-arret .cm-gutterElement:hover:empty::after {
+  content: '●';
+  color: var(--erreur);
+  opacity: 0.35;
+  font-size: 0.9em;
+}
+
+.cm-ligne-courante {
+  background-color: var(--fond-ligne-courante) !important;
+  box-shadow: inset 4px 0 0 var(--bord-ligne-courante);
+}
+
+.cm-ligne-appel {
+  background-color: var(--fond-ligne-appel);
+  box-shadow: inset 4px 0 0 var(--texte-doux);
+}
+
+.barre-debogage {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 0.6rem;
+  padding: 0.4rem 1rem;
+  background: var(--fond-attention);
+  border-bottom: 1px solid var(--bordure);
+}
+
+.statut-execution {
+  margin: 0 0.5rem 0 0;
+  font-weight: 600;
+}
+
+.inspection {
+  border-top: 1px solid var(--bordure);
+  max-height: 45%;
+  overflow: auto;
+  flex-shrink: 0;
+}
+
+.inspection .vide,
+.inspection .aide {
+  padding: 0 0.8rem;
+  color: var(--texte-doux);
+}
+
+.inspection.perimee table {
+  opacity: 0.65;
+}
+
+.inspection .cadre {
+  font-weight: normal;
+}
+
+table.variables {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+table.variables th,
+table.variables td {
+  text-align: left;
+  padding: 0.25rem 0.8rem;
+  border-bottom: 1px solid var(--bordure);
+  vertical-align: top;
+}
+
+table.variables thead th {
+  color: var(--texte-doux);
+  font-weight: 600;
+}
+
+table.variables code {
+  font-family: var(--police-code);
+  word-break: break-word;
+}
+
+table.variables tr.modifiee {
+  background: var(--fond-ligne-courante);
+}
+
+.marque-modifiee {
+  font-size: 0.75rem;
+  font-weight: normal;
+  color: var(--attention);
+}
+
+.sans-valeur {
+  color: var(--texte-doux);
+  font-style: italic;
+}
+
+table.variables ol {
+  margin: 0.3rem 0 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+table.variables .indice {
+  color: var(--texte-doux);
+}
+
+.sous-titre {
+  padding: 0.6rem 0.8rem 0.2rem;
+}
+
+.pile {
+  list-style: none;
+  margin: 0;
+  padding: 0 0.8rem 0.8rem;
+}
+
+.pile button {
+  width: 100%;
+  text-align: left;
+  border: none;
+  background: none;
+}
+
+.pile button[aria-current='true'] {
+  background: var(--accent-doux);
+  font-weight: 600;
+}
+
+.pile .ligne {
+  color: var(--texte-doux);
+}
+
+/* ------------------------------------------------------------ Palette de commandes */
+
+.filtre-commandes {
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+
+.liste-commandes {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 50vh;
+  overflow: auto;
+}
+
+.liste-commandes li {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.35rem 0.5rem;
+  border-radius: var(--rayon);
+  cursor: pointer;
+}
+
+.liste-commandes li[aria-selected='true'] {
+  background: var(--accent);
+  color: var(--sur-accent);
+}
+
+.liste-commandes kbd {
+  font-family: var(--police-code);
+  font-size: 0.8rem;
+  opacity: 0.85;
 }

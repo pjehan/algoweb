@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import { MoteurExecution } from '../execution/client.ts'
+import type { CadreAffiche, ModePas } from '../execution/machine.ts'
 import type { MessageDuMoteur } from '../execution/session.ts'
 import type { Diagnostic } from '../langage/messages.ts'
 import { convertirNotation } from '../langage/notation.ts'
@@ -18,6 +19,36 @@ export type BlocConsole =
   | { genre: 'erreur'; texte: string; suggestion?: string; ligne?: number }
 
 export type EtatExecution = 'arrete' | 'en-cours' | 'saisie' | 'pause'
+
+export interface Pause {
+  ligne: number
+  raison: 'pas' | 'point-arret' | 'pause' | 'demande'
+  pile: CadreAffiche[]
+  /** Variables modifiées depuis la pause précédente : « indice du cadre:nom ». */
+  modifiees: string[]
+}
+
+/** Délai entre deux pas de l'exécution animée, en millisecondes. */
+export const VITESSES = { lente: 1000, normale: 400, rapide: 100 } as const
+export type Vitesse = keyof typeof VITESSES
+
+/**
+ * Variables dont la valeur a changé depuis la pause précédente. Un cadre est
+ * comparé au cadre de même rang s'il s'agit du même sous-programme.
+ */
+export function variablesModifiees(pile: CadreAffiche[], precedente: CadreAffiche[] | undefined): string[] {
+  if (!precedente) return []
+  const modifiees: string[] = []
+  pile.forEach((cadre, k) => {
+    const avant = precedente[k]
+    if (!avant || avant.nom !== cadre.nom) return
+    for (const v of cadre.variables) {
+      const ancienne = avant.variables.find((x) => x.nom === v.nom)
+      if (ancienne?.valeur !== v.valeur) modifiees.push(`${k}:${v.nom}`)
+    }
+  })
+  return modifiees
+}
 
 export const LIGNES_CONSOLE_MAX = 10_000
 const DELAI_SAUVEGARDE = 1000
@@ -47,6 +78,14 @@ interface Etat {
   annonce: string
   /** Fichiers déposés ou choisis, en attente d'import. */
   aImporter: File[]
+  /** Points d'arrêt de chaque algorithme (lignes), pour la session. */
+  pointsArret: Record<string, number[]>
+  pause: Pause | null
+  /** Cadre de la pile affiché dans le panneau Variables. */
+  cadreChoisi: number
+  /** Exécution animée : un pas toutes les `vitesse` millisecondes. */
+  animation: boolean
+  vitesse: Vitesse
 
   initialiser: (stockage: Stockage) => void
   recharger: () => void
@@ -69,14 +108,25 @@ interface Etat {
   annoncer: (texte: string) => void
   demanderImport: (fichiers: File[]) => void
   executer: () => void
+  executerPasAPas: () => void
   arreter: () => void
   continuer: () => void
+  pas: (mode: ModePas) => void
+  suspendre: () => void
+  animer: (actif: boolean) => void
+  definirVitesse: (v: Vitesse) => void
+  definirPointsArret: (lignes: number[]) => void
+  basculerPointArret: (ligne: number) => void
+  choisirCadre: (k: number) => void
   saisir: (texte: string) => void
   effacerConsole: () => void
 }
 
 let minuterieSauvegarde: ReturnType<typeof setTimeout> | undefined
 let moteur: MoteurExecution | undefined
+let minuterieAnimation: ReturnType<typeof setTimeout> | undefined
+/** L'exécution en cours s'est arrêtée au moins une fois : sa durée totale n'a pas de sens. */
+let interrompue = false
 /** Dernière demande de saisie, rétablie si la valeur envoyée est refusée. */
 let saisieEnvoyee: { variable: string; typeAttendu: string } | null = null
 
@@ -157,23 +207,52 @@ export const useEtat = create<Etat>()((set, get) => {
       case 'saisieInvalide':
         if (saisieEnvoyee) set({ execution: 'saisie', saisie: { ...saisieEnvoyee, message: m.message } })
         return
-      case 'enPause':
-        // Le pas à pas arrive en phase 5 : l'instruction Pause attend simplement une reprise.
-        set({ execution: 'pause' })
-        ajouter({ genre: 'info', texte: `Pause à la ligne ${m.ligne} : choisissez Continuer pour reprendre.` })
+      case 'enPause': {
+        interrompue = true
+        const pause: Pause = {
+          ligne: m.ligne,
+          raison: m.raison,
+          pile: m.pile,
+          modifiees: variablesModifiees(m.pile, get().pause?.pile),
+        }
+        set({ execution: 'pause', pause, cadreChoisi: m.pile.length - 1 })
+        if (m.raison === 'pause') ajouter({ genre: 'info', texte: `Pause à la ligne ${m.ligne} : choisissez Continuer pour reprendre.` })
+        if (get().animation) {
+          // Un point d'arrêt ou une instruction Pause interrompt l'animation.
+          if (m.raison === 'pas') minuterieAnimation = setTimeout(() => get().animation && get().pas('entrer'), VITESSES[get().vitesse])
+          else set({ animation: false })
+        }
         return
+      }
       case 'erreur':
-        set({ execution: 'arrete', saisie: null })
+        set({ execution: 'arrete', saisie: null, pause: null, animation: false })
         ajouter({ genre: 'erreur', texte: `Erreur à la ligne ${m.ligne} : ${m.message}`, suggestion: m.suggestion, ligne: m.ligne })
         return
       case 'termine': {
-        set({ execution: 'arrete', saisie: null })
+        set({ execution: 'arrete', saisie: null, pause: null, animation: false })
         const secondes = m.duree / 1000
         const duree = secondes < 1 ? `${Math.round(m.duree)} ms` : `${secondes.toFixed(1).replace('.', ',')} s`
-        ajouter({ genre: 'info', texte: `Exécution terminée en ${duree}.` })
+        ajouter({ genre: 'info', texte: interrompue ? 'Exécution terminée.' : `Exécution terminée en ${duree}.` })
         return
       }
     }
+  }
+
+  /** Lance l'exécution, en continu ou pas à pas (arrêt sur la première ligne). */
+  const lancer = (mode: 'continu' | 'pas') => {
+    const { texte, preferences, document: doc, execution, courantId, pointsArret } = get()
+    if (execution !== 'arrete') get().arreter()
+    clearTimeout(minuterieAnimation)
+    interrompue = false
+    moteur ??= new MoteurExecution(recevoir)
+    set({ console: [], saisie: null, pause: null, execution: 'en-cours', debutExecution: Date.now() })
+    moteur.lancer({
+      source: texte,
+      mode,
+      pointsArret: courantId ? (pointsArret[courantId] ?? []) : [],
+      graine: doc?.graine ?? null,
+      notation: preferences.notation,
+    })
   }
 
   return {
@@ -194,6 +273,11 @@ export const useEtat = create<Etat>()((set, get) => {
     aller: null,
     annonce: '',
     aImporter: [],
+    pointsArret: {},
+    pause: null,
+    cadreChoisi: 0,
+    animation: false,
+    vitesse: 'normale',
 
     initialiser: (stockage) => {
       const bibliotheque = new Bibliotheque(stockage)
@@ -317,25 +401,60 @@ export const useEtat = create<Etat>()((set, get) => {
 
     demanderImport: (fichiers) => set({ aImporter: fichiers }),
 
-    executer: () => {
-      const { texte, preferences, document: doc, execution } = get()
-      if (execution !== 'arrete') get().arreter()
-      moteur ??= new MoteurExecution(recevoir)
-      set({ console: [], saisie: null, execution: 'en-cours', debutExecution: Date.now() })
-      moteur.lancer({ source: texte, mode: 'continu', pointsArret: [], graine: doc?.graine ?? null, notation: preferences.notation })
-    },
+    executer: () => lancer('continu'),
+
+    executerPasAPas: () => lancer('pas'),
 
     arreter: () => {
+      clearTimeout(minuterieAnimation)
       if (get().execution === 'arrete') return
       moteur?.arreter()
-      set({ execution: 'arrete', saisie: null, console: ajouterConsole(get().console, { genre: 'info', texte: 'Exécution arrêtée.' }) })
+      set({ execution: 'arrete', saisie: null, pause: null, animation: false, console: ajouterConsole(get().console, { genre: 'info', texte: 'Exécution arrêtée.' }) })
     },
 
     continuer: () => {
       if (get().execution !== 'pause') return
-      set({ execution: 'en-cours' })
+      clearTimeout(minuterieAnimation)
+      set({ execution: 'en-cours', animation: false })
       moteur?.continuer()
     },
+
+    pas: (mode) => {
+      if (get().execution !== 'pause') return
+      set({ execution: 'en-cours' })
+      moteur?.pas(mode)
+    },
+
+    suspendre: () => {
+      if (get().execution === 'en-cours') moteur?.pause()
+    },
+
+    animer: (actif) => {
+      clearTimeout(minuterieAnimation)
+      set({ animation: actif })
+      if (actif && get().execution === 'pause') get().pas('entrer')
+      else if (actif && get().execution === 'arrete') lancer('pas')
+    },
+
+    definirVitesse: (vitesse) => set({ vitesse }),
+
+    definirPointsArret: (lignes) => {
+      const id = get().courantId
+      if (!id) return
+      const actuels = get().pointsArret[id] ?? []
+      if (actuels.length === lignes.length && actuels.every((l, k) => l === lignes[k])) return
+      set({ pointsArret: { ...get().pointsArret, [id]: lignes } })
+      if (get().execution !== 'arrete') moteur?.pointsArret(lignes)
+    },
+
+    basculerPointArret: (ligne) => {
+      const id = get().courantId
+      if (!id) return
+      const actuels = get().pointsArret[id] ?? []
+      get().definirPointsArret(actuels.includes(ligne) ? actuels.filter((l) => l !== ligne) : [...actuels, ligne].sort((a, b) => a - b))
+    },
+
+    choisirCadre: (cadreChoisi) => set({ cadreChoisi }),
 
     saisir: (texte) => {
       const saisie = get().saisie

@@ -268,6 +268,15 @@ describe('débogueur', () => {
     ])
   })
 
+  it('signale un point d’arrêt atteint pendant le pas à pas', () => {
+    const m = machine()
+    m.pointsArret.add(13)
+    m.pas('entrer')
+    expect(m.executer(1000)).toEqual({ genre: 'arret', raison: 'pas', ligne: 12 })
+    m.pas('entrer')
+    expect(m.executer(1000)).toEqual({ genre: 'arret', raison: 'point-arret', ligne: 13 })
+  })
+
   it('s’arrête à la demande, et sur l’instruction Pause', () => {
     const m = machine()
     m.demanderArret()
